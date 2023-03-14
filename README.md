@@ -97,3 +97,10 @@ this method accept four arguments, the first one is the detrended blank signal, 
 
 ## Generating the traning sets and Clustering 
 
+Some parameters are extacted to distinguish the types of the spikes and noise spikes, performed by the K-means, the method is as 
+
+```matlab
+Sig1 = Sig1.GeRawTrainSet('Y','Y');
+```
+
+![ElbowMCAT](https://user-images.githubusercontent.com/100134089/224969799-464e2fbd-e34c-4baa-8067-78c9ae10a788.svg)
