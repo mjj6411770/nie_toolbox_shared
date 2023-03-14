@@ -71,3 +71,4 @@ In case you set the frequency like below:
   Sig1 = Sig1.Denoise(15,10);
 ```
 it will ouput the curve as one below:
+![DenoiseCATA](https://user-images.githubusercontent.com/100134089/224957690-a83e87b4-bb0b-4373-a720-10b8a3be4b18.svg)
