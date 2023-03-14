@@ -106,3 +106,9 @@ the first argument is based on elbow method and the second is by silhouette scor
 #### Elbow method:
 ![ElbowMCAT](https://user-images.githubusercontent.com/100134089/224969799-464e2fbd-e34c-4baa-8067-78c9ae10a788.svg)
 #### Silhouette Score:
+
+
+
+
+## Templates generation
+The next step is to generate the representive templates based on the K-means results, the spikes belong to same cluster are avergaed, obtain the raw templates
