@@ -77,11 +77,11 @@ it will ouput the curve as one below:
 it will leave a input window on the command window to ask if the user would like to change the order and the orders to be changed.
 
 ## Background Subtraction 
-The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot
+The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot for the fitted line and offset signal
 
 ```matlab
   Winsize = 100;
   Sig1 = Sig1.BgSub(Winsize,'y');
   Back1 = Back1.BgSub(1000,'N');
 ```
-
+![BgSubCat1](https://user-images.githubusercontent.com/100134089/224961351-3191704a-ea74-41f8-b866-184037d515aa.svg)
