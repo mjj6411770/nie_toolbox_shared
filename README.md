@@ -1,5 +1,4 @@
 
-
 # NIE data-driven template matching 
 
 It's a simple toolbox for using the data-driven template matching in nano-impact electrochemistry signal analysis
@@ -66,3 +65,9 @@ It will output the 3D plot as below, the time axis may differ:
 
 ![stftCATA1](https://user-images.githubusercontent.com/100134089/224954832-f8a181a1-0020-407c-a0c7-f6e5dad1f0d2.svg)
 
+In case you set the frequency like below: 
+
+```matlab
+  Sig1 = Sig1.Denoise(15,10);
+```
+it will ouput the curve as one below:
