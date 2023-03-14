@@ -10,7 +10,8 @@ It's a simple toolbox for using the data-driven template matching in nano-impact
 
 - [@ziwzh166](https://github.com/ziwzh166)
 - [@arun-naha](https://github.com/arun-naha)
-
+- Sagar Ganguli
+- Alina Sekretareva*
 
 
 ## Installation
@@ -72,4 +73,15 @@ In case you set the frequency like below:
 ```
 it will ouput the curve as one below:
 ![DenoiseCATA](https://user-images.githubusercontent.com/100134089/224957690-a83e87b4-bb0b-4373-a720-10b8a3be4b18.svg)
-1
+
+it will leave a input window on the command window to ask if the user would like to change the order and the orders to be changed.
+
+## Background Subtraction 
+The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot
+
+```matlab
+  Winsize = 100;
+  Sig1 = Sig1.BgSub(Winsize,'y');
+  Back1 = Back1.BgSub(1000,'N');
+```
+
