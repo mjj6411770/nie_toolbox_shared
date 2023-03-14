@@ -146,3 +146,16 @@ Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
 the sim is the similarity filter, the StdCoeff and HeightWidth compare each matched spike with the templates corresponding value times coefficients. Following by two plot arguments, first one show the matched interval by two different templates, and the second shows the merged different matched interval by different colors:
 ![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
 ![MatchedMerInte](https://user-images.githubusercontent.com/100134089/224994486-4957a062-d34b-45d3-92b2-a4b0d403ec5e.svg)
+
+## Physcial info extracted and regenerating the templates
+With well defined two sides we can extarct the information as what we want to have there are eigth parameters get extracted. They can be found in paper
+these are given by the code: 
+```matlab
+Sig1 = Sig1.GeAMTrainSet('Y','Y',"N");
+```
+the first arguemtns is in case, the numerical filetring is still not good enough, it will take the height threshold that calculate from the blank to filter further the peak and next two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the trest by yourself
+![Elbow2](https://user-images.githubusercontent.com/100134089/225002860-d110a05c-4e00-4e59-a475-ecd4df06687f.svg)
+
+## Generate the new templates see it's on the original signal and some statistic data
+![Recluster](https://user-images.githubusercontent.com/100134089/225004286-c07e9bc2-ebbb-4506-85ab-c75cb30980ce.svg)
+![STA](https://user-images.githubusercontent.com/100134089/225004251-b02828cc-76f6-4936-a4ae-5bfbdaacf8c5.svg)
