@@ -20,9 +20,9 @@ It's a simple toolbox for using the data-driven template matching in nano-impact
 the project is based on Matlab, please install the following add-ons to test the package 
 
 ```matlab
-    ## Signal processing toolbox
-    ## Statistics and Machine Learning Toolbox
-    ## Parallel Computing Toolbox
+    %% Signal processing toolbox
+    %% Statistics and Machine Learning Toolbox
+    %% Parallel Computing Toolbox
 ```
     
 ## This toolbox will follow the flow chart below
