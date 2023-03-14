@@ -128,3 +128,21 @@ Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
 ![Regutem](https://user-images.githubusercontent.com/100134089/224990028-70f0515b-8e6c-48ab-9137-b300eacfd2d7.svg)
 
 ## Templates Matching 
+templates matching is performed by NCC coefficient the deatils can be found in paper,the NCC coefficient shows a cosine similarity, given by the method:
+```matlab
+Sig1 = Sig1.Templatematching('Y');
+```
+the argument decides whetherto show the plot as below, xy axis are linked 
+![SimCurve](https://user-images.githubusercontent.com/100134089/224991829-1b20b68b-26f0-4990-b84c-8269cdb2fa37.svg)
+
+## Numerical filtering and interval mergering 
+The matching given the matched spikes with the noisy scale, which can be filtered by the numercial filter, given by the method below:
+```matlab
+Sim = 0.9;
+StdCoeff = 0.35;
+HeightWidth = 0.35;
+Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
+```
+the sim is the similarity filter, the StdCoeff and HeightWidth compare each matched spike with the templates corresponding value times coefficients. Following by two plot arguments, first one show the matched interval by two different templates, and the second shows the merged different matched interval by different colors:
+![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
+![MatchedMerInte](https://user-images.githubusercontent.com/100134089/224994486-4957a062-d34b-45d3-92b2-a4b0d403ec5e.svg)
