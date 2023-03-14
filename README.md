@@ -77,7 +77,7 @@ it will ouput the curve as one below:
 it will leave a input window on the command window to ask if the user would like to change the order and the orders to be changed.
 
 ## Background Subtraction 
-The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot for the fitted line and offset signal
+The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot for the fitted line and offset signal, the 
 
 ```matlab
   Winsize = 100;
@@ -85,3 +85,12 @@ The background suntraction is made by making the smoothdata based on the roloess
   Back1 = Back1.BgSub(1000,'N');
 ```
 ![BgSubCat1](https://user-images.githubusercontent.com/100134089/224961351-3191704a-ea74-41f8-b866-184037d515aa.svg)
+
+## Sampling some peaks based on height threshold 
+This step is based on the blank signal to generate the height threshold and perform sampling follow by this code:
+
+```matlab
+Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset"); 
+```
+this method accept four arguments, the first one is the detrended blank signal, the next one is either the NIE signal is oxidative or reductive. in 'Red' or 'Oxi', the the third argument is if to show the plot and show the found peaks on the offset or original tren signal, the output as below:
+
