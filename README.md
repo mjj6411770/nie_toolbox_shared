@@ -156,6 +156,13 @@ Sig1 = Sig1.GeAMTrainSet('Y','Y',"N");
 the first arguemtns is in case, the numerical filetring is still not good enough, it will take the height threshold that calculate from the blank to filter further the peak and next two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the trest by yourself
 ![Elbow2](https://user-images.githubusercontent.com/100134089/225002860-d110a05c-4e00-4e59-a475-ecd4df06687f.svg)
 
-## Generate the new templates see it's on the original signal and some statistic data
+## Generate the new templates marked spikes on original signal related statistic
+after reclustering the physical information we can regenerating the templates as the representitives for the signal spikes by the given method 
+```matlab
+Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
+```
+the first one is the centroid numbers, second is show the found spikes on the original denoised signal and some reated statitic 
+#### Reclustering and show the statistic:
 ![Recluster](https://user-images.githubusercontent.com/100134089/225004286-c07e9bc2-ebbb-4506-85ab-c75cb30980ce.svg)
+#### marked original signal:
 ![STA](https://user-images.githubusercontent.com/100134089/225004251-b02828cc-76f6-4936-a4ae-5bfbdaacf8c5.svg)
