@@ -106,8 +106,7 @@ the first argument is based on elbow method and the second is by silhouette scor
 #### Elbow method:
 ![ElbowMCAT](https://user-images.githubusercontent.com/100134089/224969799-464e2fbd-e34c-4baa-8067-78c9ae10a788.svg)
 #### Silhouette Score:
-
-
+![SC_CAT](https://user-images.githubusercontent.com/100134089/224986902-edcbbe18-0032-42e8-a6cf-07d80d376b41.svg)
 
 
 ## Templates generation
@@ -116,4 +115,4 @@ The next step is to generate the representive templates based on the K-means res
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
 ```
 it will sjow the raw templates and bar chart for the sum of different template
-![TemRawCAT](https://user-images.githubusercontent.com/100134089/224980535-add24f70-de38-4701-a3fc-39437f1c0b92.svg)
+![TemRawCAT](https://user-images.githubusercontent.com/100134089/224986136-49ab4ef3-6b7f-46ba-88df-ae843e7fe360.svg)
