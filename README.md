@@ -111,4 +111,9 @@ the first argument is based on elbow method and the second is by silhouette scor
 
 
 ## Templates generation
-The next step is to generate the representive templates based on the K-means results, the spikes belong to same cluster are avergaed, obtain the raw templates
+The next step is to generate the representive templates based on the K-means results, the spikes belong to same cluster are avergaed, obtain the raw templates, the method is made by following command:
+```matlab
+Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
+```
+it will sjow the raw templates and bar chart for the sum of different template
+![TemRawCAT](https://user-images.githubusercontent.com/100134089/224980535-add24f70-de38-4701-a3fc-39437f1c0b92.svg)
