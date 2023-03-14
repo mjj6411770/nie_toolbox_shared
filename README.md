@@ -162,7 +162,7 @@ after reclustering the physical information we can regenerating the templates as
 Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
 ```
 the first one is the centroid numbers, second is show the found spikes on the original denoised signal and some reated statitic 
-#### Reclustering and show the statistic:
+#### Marked original signal:
 ![Recluster](https://user-images.githubusercontent.com/100134089/225004286-c07e9bc2-ebbb-4506-85ab-c75cb30980ce.svg)
-#### marked original signal:
+#### Reclustering and show the statistic:
 ![STA](https://user-images.githubusercontent.com/100134089/225004251-b02828cc-76f6-4936-a4ae-5bfbdaacf8c5.svg)
