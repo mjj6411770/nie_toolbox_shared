@@ -8,8 +8,8 @@ It's a simple toolbox for using the data-driven template matching in nano-impact
 
 ## Authors
 
-- [@ziwzh166](https://github.com/ziwzh166)
-- [@arun-naha](https://github.com/arun-naha)
+- Ziwen Zhao [@ziwzh166](https://github.com/ziwzh166)
+- Arunava Naha [@arun-naha](https://github.com/arun-naha)
 - Sagar Ganguli
 - Alina Sekretareva*
 
@@ -93,4 +93,7 @@ This step is based on the blank signal to generate the height threshold and perf
 Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset"); 
 ```
 this method accept four arguments, the first one is the detrended blank signal, the next one is either the NIE signal is oxidative or reductive. in 'Red' or 'Oxi', the the third argument is if to show the plot and show the found peaks on the offset or original tren signal, the output as below:
+![FindPeaksCAT](https://user-images.githubusercontent.com/100134089/224968188-8bab673a-283b-4c9e-990f-4a18a26fb868.svg)
+
+## Generating the traning sets and Clustering 
 
