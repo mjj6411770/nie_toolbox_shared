@@ -102,5 +102,7 @@ Some parameters are extacted to distinguish the types of the spikes and noise sp
 ```matlab
 Sig1 = Sig1.GeRawTrainSet('Y','Y');
 ```
-
+the first argument is based on elbow method and the second is by silhouette score, input 'y' or 'n' for the corresponding methods 
+#### Elbow method:
 ![ElbowMCAT](https://user-images.githubusercontent.com/100134089/224969799-464e2fbd-e34c-4baa-8067-78c9ae10a788.svg)
+#### Silhouette Score:
