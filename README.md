@@ -112,9 +112,19 @@ the first argument is based on elbow method and the second is by silhouette scor
 
 
 ## Templates generation
-The next step is to generate the representive templates based on the K-means results, the spikes belong to same cluster are avergaed, obtain the raw templates, the method is made by following command:
+The next step is to generate the representative templates based on the K-means results, the spikes belonging to same cluster are averaged, obtain the raw templates; the method is made by the following command:
 ```matlab
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
 ```
-it will sjow the raw templates and bar chart for the sum of different template
+it will show the raw templates and bar chart for the sum of different template
 ![TemRawCAT](https://user-images.githubusercontent.com/100134089/224986136-49ab4ef3-6b7f-46ba-88df-ae843e7fe360.svg)
+![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
+
+## Templates Regulation
+There are some templates which are the templates for the noisy spikes, and some templates need to regulate two sides to avoid involving two much background trend, the first black one is removed by the method output as, the last argument works as whether to plot 
+```matlab
+Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
+```
+![Regutem](https://user-images.githubusercontent.com/100134089/224990028-70f0515b-8e6c-48ab-9137-b300eacfd2d7.svg)
+
+## Templates Matching 
