@@ -1,7 +1,7 @@
 
 # NIE data-driven template matching 
 
-It's a simple toolbox for using the data-driven template matching in nano-impact electrochemistry signal analysis
+It is a simple toolbox for using data-driven template matching in nano-impact electrochemistry signal analysis.
 
 
 
@@ -16,7 +16,7 @@ It's a simple toolbox for using the data-driven template matching in nano-impact
 
 ## Installation
 
-the project is based on Matlab, please install the following add-ons to test the package 
+The project is based on Matlab. Please install the following add-ons to test the package 
 
 ```matlab
     %% Signal processing toolbox
@@ -33,10 +33,7 @@ the project is based on Matlab, please install the following add-ons to test the
 ###
 ## To start
 
-In the folder /test, you can find two .m files, SignalAnalysis is the toolbox for performing the analysis, and Display.m is the live editor file in which you can see the results step by step. Furthermore, the other four .txt files are the NIE and blank signals we mentioned in the paper.
-
-In the first section are created to import the data and create new classes
-which is given by the first name string in the folder and is imported into the class.
+Inside the "/test" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.m," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
 
 ```matlab
     Sig1 = SignalAnalysis(names_Str(1));
@@ -44,40 +41,37 @@ which is given by the first name string in the folder and is imported into the c
 
 ## Resampling 
 
-As we state in the paper, the unevenly sampled signal is integrated into the preprocess method.
+The paper states that the unevenly sampled signal is integrated into the preprocess method.
 
 ```matlab
   Sig1 = Sig1.Preprocess("PA","N","Y","Y");
 ```
 
-The first argument is made for changing the current unit. This simple toolbox will convert all scales of current into pA; the second argument is whether or not to shift the time from 0, which can be input as 'yes' or 'no.' Then the third argument is whether the resample is performed or not, and the last one is if to show the plot with an original and resampled signal. 
-It will be the plot as below: 
+The first argument is used for changing the current unit. This simple toolbox converts all current scales into pA. The second argument is used to shift the time from 0, which can be input as 'yes' or 'no.' The third argument determines whether resampling is performed, and the last argument determines whether to show the plot with an original and resampled signal. The following plot shows the result of resampling:
 ![Resampling](https://user-images.githubusercontent.com/100134089/224944121-91084fef-a1f0-4e92-b4d2-900f48043e30.svg)
 
 ## Denoise 
 
-As we state in the paper, we denoise the signal by the lowpass filter and understand the noise frequency by stft function, in the method we integrated,
-there are two inputs, fisrt one is the frequecy to cut off and second is the orders of the filter to apple, in general the higher the order the stronger the filetr it will be but stonger delay to the signal. If you call the method of class by leaving first argument blank as below 
-
+As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The method we integrated has two inputs. The first one is the frequency to cut off, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the stronger the delay to the signal. If you call the method of the class by leaving the first argument blank, as shown below:
 ```matlab
   Sig1 = Sig1.Denoise([],10);
 ```
-It will output the 3D plot as below, the time axis may differ:
+The output will be the 3D plot below. The time axis may differ:
 
 ![stftCATA1](https://user-images.githubusercontent.com/100134089/224954832-f8a181a1-0020-407c-a0c7-f6e5dad1f0d2.svg)
 
-In case you set the frequency like below: 
+If you set the frequency like this:
 
 ```matlab
   Sig1 = Sig1.Denoise(15,10);
 ```
-it will ouput the curve as one below:
+It will output the following curve:
 ![DenoiseCATA](https://user-images.githubusercontent.com/100134089/224957690-a83e87b4-bb0b-4373-a720-10b8a3be4b18.svg)
 
-it will leave a input window on the command window to ask if the user would like to change the order and the orders to be changed.
+It will leave an input window on the command window to ask if the user would like to change the order and the orders to be changed.
 
 ## Background Subtraction 
-The background suntraction is made by making the smoothdata based on the roloess, you can input the argument as, the bigger the window size the better fitting the trend line, the last argument is wehter or not to show the plot for the fitted line and offset signal, the 
+The background subtraction is made by making the smooth data based on the roloess; you can input the argument as the bigger the window size, the better fitting the trend line. The last argument is whether or not to show the plot for the fitted line and offset signal, the 
 
 ```matlab
   Winsize = 100;
@@ -86,23 +80,23 @@ The background suntraction is made by making the smoothdata based on the roloess
 ```
 ![BgSubCat1](https://user-images.githubusercontent.com/100134089/224961351-3191704a-ea74-41f8-b866-184037d515aa.svg)
 
-## Sampling some peaks based on height threshold 
+## Sampling some peaks based on the height threshold 
 This step is based on the blank signal to generate the height threshold and perform sampling follow by this code:
 
 ```matlab
 Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset"); 
 ```
-this method accept four arguments, the first one is the detrended blank signal, the next one is either the NIE signal is oxidative or reductive. in 'Red' or 'Oxi', the the third argument is if to show the plot and show the found peaks on the offset or original tren signal, the output as below:
+This method accepts four arguments, the first is the detrended blank signal, and the next is whether the NIE signal is oxidative or reductive. In 'Red' or 'Oxi', the third argument is to show the plot and show the found peaks on the offset or original tren signal, the output as below:
 ![FindPeaksCAT](https://user-images.githubusercontent.com/100134089/224968188-8bab673a-283b-4c9e-990f-4a18a26fb868.svg)
 
-## Generating the traning sets and Clustering 
+## Generating the training sets and Clustering 
 
-Some parameters are extacted to distinguish the types of the spikes and noise spikes, performed by the K-means, the method is as 
+Some parameters are extracted to distinguish the types of spikes and noise spikes, performed by the K-means; the method is as 
 
 ```matlab
 Sig1 = Sig1.GeRawTrainSet('Y','Y');
 ```
-the first argument is based on elbow method and the second is by silhouette score, input 'y' or 'n' for the corresponding methods 
+the first argument is based on the elbow method, and the second is by silhouette score, input 'y' or 'n' for the corresponding methods 
 #### Elbow method:
 ![ElbowCAT](https://user-images.githubusercontent.com/100134089/224988058-98917542-1926-47d3-aefd-f1bb2a75ce32.svg)
 
@@ -112,7 +106,7 @@ the first argument is based on elbow method and the second is by silhouette scor
 
 
 ## Templates generation
-The next step is to generate the representative templates based on the K-means results, the spikes belonging to same cluster are averaged, obtain the raw templates; the method is made by the following command:
+The next step is to generate the representative templates based on the K-means results; the spikes belonging to the same cluster are averaged, obtain the raw templates; the following command makes the method:
 ```matlab
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
 ```
@@ -121,48 +115,48 @@ it will show the raw templates and bar chart for the sum of different template
 ![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
 
 ## Templates Regulation
-There are some templates which are the templates for the noisy spikes, and some templates need to regulate two sides to avoid involving two much background trend, the first black one is removed by the method output as, the last argument works as whether to plot 
+There are some templates which are templates for the noisy spikes, and some templates need to regulate two sides to avoid involving too much background trend; the first black one is removed by the method output as the last argument works as whether to plot 
 ```matlab
 Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
 ```
 ![Regutem](https://user-images.githubusercontent.com/100134089/224990028-70f0515b-8e6c-48ab-9137-b300eacfd2d7.svg)
 
 ## Templates Matching 
-templates matching is performed by NCC coefficient the deatils can be found in paper,the NCC coefficient shows a cosine similarity, given by the method:
+templates matching is performed by NCC coefficient the details can be found in the paper,the NCC coefficient shows a cosine similarity, given by the method:
 ```matlab
 Sig1 = Sig1.Templatematching('Y');
 ```
-the argument decides whetherto show the plot as below, xy axis are linked 
+the argument decides whether to show the plot as below, xy axis is linked 
 ![SimCurve](https://user-images.githubusercontent.com/100134089/224991829-1b20b68b-26f0-4990-b84c-8269cdb2fa37.svg)
 
-## Numerical filtering and interval mergering 
-The matching given the matched spikes with the noisy scale, which can be filtered by the numercial filter, given by the method below:
+## Numerical filtering and interval merging 
+The matching is given the matched spikes with the noisy scale, which can be filtered by the numerical filter given by the method below:
 ```matlab
 Sim = 0.9;
 StdCoeff = 0.35;
 HeightWidth = 0.35;
 Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
 ```
-the sim is the similarity filter, the StdCoeff and HeightWidth compare each matched spike with the templates corresponding value times coefficients. Following by two plot arguments, first one show the matched interval by two different templates, and the second shows the merged different matched interval by different colors:
+The sim is the similarity filter; the StdCoeff and HeightWidth compare each matched spike with the template corresponding value times coefficients. Followed by two plot arguments; first one show the matched interval by two different templates, and the second shows the merged different matched interval by different colors:
 ![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
 ![MatchedMerInte](https://user-images.githubusercontent.com/100134089/224994486-4957a062-d34b-45d3-92b2-a4b0d403ec5e.svg)
 
-## Physcial info extracted and regenerating the templates
-With well defined two sides we can extarct the information as what we want to have there are eigth parameters get extracted. They can be found in paper
+## Physical info extracted and regenerated the templates
+With two well-defined sides, we can extract the information as what we want to have. There are eight parameters get extracted. They can be found in the paper
 these are given by the code: 
 ```matlab
 Sig1 = Sig1.GeAMTrainSet('Y','Y',"N");
 ```
-the first arguemtns is in case, the numerical filetring is still not good enough, it will take the height threshold that calculate from the blank to filter further the peak and next two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the trest by yourself
+The first argument is in case the numerical filtering is still not good enough, it will take the height threshold that calculates from the blank to filter further the peak, and the following two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the test by your own.
 ![Elbow2](https://user-images.githubusercontent.com/100134089/225002860-d110a05c-4e00-4e59-a475-ecd4df06687f.svg)
 
-## Generate the new templates marked spikes on original signal related statistic
-after reclustering the physical information we can regenerating the templates as the representitives for the signal spikes by the given method 
+## Generate the new templates marked spikes on an original signal related statistic
+after reclustering the physical information we can regenerate the templates as the representatives for the signal spikes by the given method 
 ```matlab
 Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
 ```
-the first one is the centroid numbers, second is show the found spikes on the original denoised signal and some reated statitic 
+the first one is the centroid numbers; the second shows the found spikes on the original denoised signal and some related statistic 
 #### Marked original signal:
 ![Recluster](https://user-images.githubusercontent.com/100134089/225004286-c07e9bc2-ebbb-4506-85ab-c75cb30980ce.svg)
-#### Reclustering and show the statistic:
+#### Reclustering and showing the statistic:
 ![STA](https://user-images.githubusercontent.com/100134089/225004251-b02828cc-76f6-4936-a4ae-5bfbdaacf8c5.svg)
