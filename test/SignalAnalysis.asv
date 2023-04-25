@@ -614,17 +614,8 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
             %Regulated the raw template, take from left side min to peak to
             %right side min
-            %             Removing the noisy templates and making raw templates fine
-            %             [theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
-            %             Input--
-            %             ManSelectedNum a row vector of selected numbers of raw templates to perform the fine process.if it leaves as blank it will only take the raw templates more than 15%
-            %             Plotstates Whether or not to show the fine templates plot e.g. 'y'
-            %             Output--
-            %             Sig.TemplatateRawRegu A cell with fine templates
-            %             Sig.TemplatateRawReguNum A vector with selected number
-            if nargin == 1 || isempty(ManSelectedNum)
-                ManSelectedNum = find(theSignalAnalysis.TemplateRawUnReguCounts(:,2)>0.15);
-                ManSelectedNum = ManSelectedNum';
+            if nargin ==1 || ManSelectedNum == []
+               ManSelectedNum = find() 
             end
             [Regulatedtemplates,RegulatedtemplatesNum] = SignalAnalysis.templatesRegu(...
                 theSignalAnalysis,theSignalAnalysis.TemplateRawUnRegu,...
