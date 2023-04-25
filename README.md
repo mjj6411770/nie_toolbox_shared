@@ -33,7 +33,7 @@ The project is based on Matlab. Please install the following add-ons to test the
 ###
 ## To start
 
-Inside the "/test" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.m," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
+Inside the "/test" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.mlx," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
 
 ```matlab
     Sig1 = SignalAnalysis(names_Str(1));
