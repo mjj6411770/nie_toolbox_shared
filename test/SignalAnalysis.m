@@ -602,7 +602,7 @@ classdef SignalAnalysis
                 p = bar(StacountInte(:,1),'FaceColor','flat');
                 for i = 1:ClusterNum
                     p.CData(i,:) = theSignalAnalysis.Intecolors(i,:);
-                    text(i,StacountInte(i,1),[num2str(StacountInte(i,2)*100,'%.3f') + "%"],'vert','bottom','horiz','center');
+                    text(i,StacountInte(i,1),[num2str(StacountInte(i,2)*100,'%.3f') + "%"],'vert','bottom','horiz','center','Fontweight','bold','Fontsize',12);
                     box off
                 end
                 set(gca,'xticklabel',label)
@@ -655,8 +655,15 @@ classdef SignalAnalysis
         end
         
         function [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
-            %
-            %
+            %[theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
+            %             Perform the template matching with the fine templates
+            %             [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
+            %             --Input
+            %             Plotstates Whether or not to show the similarity stem plots
+            %             -Output
+            %             Sig.SimilarityLag it's a cell. The first dimension is the
+            %             template's number, the first column is the cosine similarity
+            %             of each template, and the second is the corresponding interval for each similarity point in time. The left point defines the interval plus the template length as the right point.
             Similag = cell(size(theSignalAnalysis.TemplatateRawRegu,1),2);
             %the gpuarray is not proficent for the cross-correlation
             theSignalAnalysis.Test_signal_offset = gather(theSignalAnalysis.Test_signal_offset);
@@ -1062,19 +1069,19 @@ classdef SignalAnalysis
                 ylabel('Counts')
                 %Area distribution
                 nexttile(3,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.Area,round(0.3*size(theSignalAnalysis.AMTraningSet,1)))
-                xlabel('Area')
+                histogram(theSignalAnalysis.AMTraningSet.Area,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
+                xlabel('Area[pC]')
                 ylabel('Counts')
                 %Height
                 nexttile(5,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.Height,round(0.3*size(theSignalAnalysis.AMTraningSet,1)))
+                histogram(theSignalAnalysis.AMTraningSet.Height,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
                 ylabel('Counts')
-                xlabel('Height')
+                xlabel('Height[pA]')
                 %range
                 nexttile(7,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.TimeDuration,round(0.3*size(theSignalAnalysis.AMTraningSet,1)))
+                histogram(theSignalAnalysis.AMTraningSet.TimeDuration,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
                 ylabel('Counts')
-                xlabel('TimeDuration')
+                xlabel('TimeDuration[s]')
                 % Avgtemplates
                 xmax = zeros(ClusterNum,1);
                 ymax = zeros(ClusterNum,1);
@@ -1086,7 +1093,7 @@ classdef SignalAnalysis
                     xmax(i) = max(Xinte);
                     ymax(i) = max(Regulatedtemplates{i,:});
                     ymin(i) = min(Regulatedtemplates{i,:});
-                    title(sprintf('Clustered Interval %d, count Numbers %d',i,TemStacountInte(i,1)))
+                    title(sprintf('Templates %d, count Numbers %d',i,TemStacountInte(i,1)))
                     ylim([ymin(i) ymax(i)* 1.05])
                 end
                 xlim(axTem,[0 max(xmax)])
@@ -1096,29 +1103,29 @@ classdef SignalAnalysis
                 %Area Each Tem
                 for i = 1:ClusterNum
                     axArea(i) = nexttile(i*16 + 19,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.Area(TemPidx == i),round(0.95 * nnz(TemPidx == i)),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    histogram(theSignalAnalysis.AMTraningSet.Area(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
                     title(sprintf('Area Distribution Type %d',i))
                 end
                 xlim(axArea,[0 max(theSignalAnalysis.AMTraningSet.Area)])
-                xlabel(axArea,'Area')
+                xlabel(axArea,'Area[pC]')
                 ylabel(axArea,'Counts')
                 %Height Each Tem
                 for i = 1:ClusterNum
                     axHeight(i) = nexttile(i*16 + 21,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.Height(TemPidx == i),round(0.95 * nnz(TemPidx == i)),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    histogram(theSignalAnalysis.AMTraningSet.Height(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
                     title(sprintf('Height Distribution Type %d',i))
                 end
                 xlim(axHeight,[0 max(theSignalAnalysis.AMTraningSet.Height)])
-                xlabel(axHeight,'Height')
+                xlabel(axHeight,'Height[pA]')
                 ylabel(axHeight,'Counts')
                 %Range
                 for i = 1:ClusterNum
                     axRange(i) = nexttile(i*16 + 23,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.TimeDuration(TemPidx == i),round(0.95 * nnz(TemPidx == i)),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
-                    title(sprintf('Range Distribution Type %d',i))
+                    histogram(theSignalAnalysis.AMTraningSet.TimeDuration(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    title(sprintf('Duration Distribution Type %d',i))
                 end
                 xlim(axRange,[0 max(theSignalAnalysis.AMTraningSet.TimeDuration)])
-                xlabel(axRange,'TimeDuration')
+                xlabel(axRange,'TimeDuration[s]')
                 ylabel(axRange,'Counts')
                 
             end
