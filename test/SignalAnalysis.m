@@ -80,7 +80,11 @@ classdef SignalAnalysis
     methods
         function thisSignalAnalysis = SignalAnalysis(Filename)
             %Input the type of files of the raw signal'*.txt';
-            %
+            %thisSignalAnalysis = SignalAnalysis(Filename)
+            % Input -- File name as a string, by defalut, consider there are other text string in the data file
+            % Output -- Sig.test_signal Original signal vector in original unit
+            %           Sig.Test_time Original time vector in original unit
+            %           Sig.Test_freq test frequency depends on the test_time vector
             try
                 thisSignalAnalysis.gpuStates = gpuDevice;
             catch
@@ -98,6 +102,13 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = Preprocess(theSignalAnalysis,OriginalUnit,Timeshift,Resample)
             % preprocess for the SEE signal, change the unit, shift the
             % time axis, and resample the data in case uneven sampling
+%             Input -- OriginalUnit a string of orgiginal data's unit e.g. 'pA', it will convert different current into pA in this toolbox
+%                      Timeshift wether or not performing the time shift, will shift the test_time starts from 0, input string as e.g. 'y'
+%                      Resample wether or not to perform the resampling for uneven sampling, input string as e.g. 'y'
+%                      ResamplePlot wether or not to show the plot with and without resampling, input string as e.g. 'y'
+%             Output -- Sig.test_signal converted unit signal vector, depending on chosen option becomes resampled signal
+%                       Sig.Test_time updated time vector in original unit, depending on chosen option becomes shifted time from 0
+%                       Sig.Test_freq updatedtest frequency depends on the test_time vector
             if nargin == 1
                 OriginalUnit = "A" ;
                 Timeshift = "N";
@@ -141,8 +152,8 @@ classdef SignalAnalysis
                     plot(ts(10:end-15),x(10:end-15)); hold on;
                     plot(ts2(10:end-15),y(10:end-15));
                     title('Original Curve');
-                    xlabel('Time/s');
-                    ylabel('Current/PA');
+                    xlabel('Time [s]');
+                    ylabel('Current [pA]');
                     %gpu arrary debug
                     minX = gather(min(ts(:,1)));
                     maxX = gather(max(ts(:,1)));
@@ -160,6 +171,12 @@ classdef SignalAnalysis
         function [theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
             %[theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
             %Denoise signal bsed on FIR lsq low pass filter, changing filterorder to see the result
+            %            Input --
+            %            CutoffFreq the cut-off frequency to apply for FIR filter, the spike frequency can get from stft plot by leaving CutoffFreq empty, suggest running in .m since the in .mlx the plot won't show instantly e.g. 10
+            %            FilterOrder the order for the FIR filter also known as term number,  higher the order, shaper the filter at pass band, but higher the delay, we din't perform the zero-phase filtering in this toolbox e.g. 10, can be changed in the command window it will ask wether or not to change, if enter no or nothing it won't change
+            %            Output --
+            %            Sig.test_signal Denoised signal
+            %            Sig.Test_time After denoising the time vector may shift due to the convolution, the filter length of data get abandoned (normally less than 20)
             if nargin ==1
                 CutoffFreq = [];
                 FilterOrder = 20;
@@ -168,6 +185,8 @@ classdef SignalAnalysis
             if isempty(CutoffFreq)
                 figure('Name',"Stft transfer of the signal")
                 stft(theSignalAnalysis.Test_signal,theSignalAnalysis.Test_freq)
+                fig = gcf;
+                fig.Children(1).Label.String = 'Magnitude [dB]';
                 ax = gca;
                 X1 = ax.Children.XData;
                 ax.Children.XData = X1*60;
