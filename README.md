@@ -10,7 +10,7 @@ It is a simple toolbox for using data-driven template matching in nano-impact el
 
 - Ziwen Zhao [@ziwzh166](https://github.com/ziwzh166)
 - Arunava Naha [@arun-naha](https://github.com/arun-naha)
-- Sagar Ganguli
+- Sagar Ganguli [@gangulisagar](https://github.com/gangulisagar)
 - Alina Sekretareva*[@alina-sekretareva](https://github.com/alina-sekretareva)
 
 
