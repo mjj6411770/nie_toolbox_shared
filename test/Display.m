@@ -1,4 +1,4 @@
-%% ls
+%% ls1
 dinfo = dir('*.txt');
 names_cell = {dinfo.name}';
 names_Str = convertCharsToStrings(names_cell)
