@@ -281,6 +281,12 @@ classdef SignalAnalysis
         function [theSignalAnalysis] = BgSub(theSignalAnalysis,WinSize,Plotstates)
             %[theSignalAnalysis] = BgSub(theSignalAnalysis,WinSize,Plotstates)
             %offset the background by rloess
+%             Input --
+%             WinSize Windows size, by default set as 1000, lower the value, and the curve fits better the NIE spikes(undesired).
+%             Plotstates whether or not showing the plot for the background subtraction, Output a subplot the first is the test_signal with a fitted trend line. The second one is the offset signal
+%             Output--
+%             Sig.test_signal_offset Offset signal data vector
+%             Sig.test_signal_trendline Fitted trendline
             if nargin ==1
                 WinSize = 1000;
                 Plotstates = "N";
@@ -463,8 +469,16 @@ classdef SignalAnalysis
         function [theSignalAnalysis] = GeRawTrainSet(theSignalAnalysis,NumPlot,SilPlot)
             %[theSignalAnalysis] = GeRawTrainSet(theSignalAnalysis,'NumPlot')
             %Generate the raw template features training set and signal
-            % if NumPlot is yes it will show the elbow method
-            % if SilPlot is yes it will show the silhouette plot
+            %if NumPlot is yes it will show the elbow method
+            %if SilPlot is yes it will show the silhouette plot
+            %Input--
+            %NumPlot Elbow plot to decide the cluster numbers
+            %SilPlot Silhouette plot to decide centroid number
+            %Output--
+            %Sig.RawTemClusterFeatures A table of clustering features, order same as Sig.FlipFindInte
+            %Sig.RawTemClusterFeaturesNorm Z-score normalized cluster features
+            %Sig.RawTemFeaturesMu Corresponding mean value for each feature
+            %Sig.RawTemFeaturesSigma Corresponding standard deviation value for each feature
             InteToCluster = theSignalAnalysis.FlipFindInte;
             InteToCluster = [InteToCluster, ones(size(InteToCluster,1),1)];
             PeakIntergration = zeros(size(InteToCluster,1),1);
@@ -533,14 +547,14 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = KmeansGeRawSigTem(theSignalAnalysis,ClusterNum,Templot,Staplot)
             %Generation for the raw templates
             %Kmeans the Raw templates
-            % Input--
-            % ClusterNum Centroid numbers selected by the method in the above section, if leave it as blank select automatically by the matlab evalclusters functions, but it's suggested to choose according to the plot
-            % Templot whether or not to show the plot with raw templates
-            % Staplot whether or not to show the bar plot with each raw templates
-            % Output--
-            % Sig.NumTemplateRawUnRegu Raw templates numbers
-            % Sig.TemplateRawUnRegu a cell with each cell of corresponding raw templates data
-            % Sig.TemplateRawUnReguCounts two columns vector, first column count numbers for corresponding raw templates, second column for the count percentage of total spikes
+            %Input--
+            %ClusterNum Centroid numbers selected by the method in the above section, if leave it as blank select automatically by the matlab evalclusters functions, but it's suggested to choose according to the plot
+            %Templot whether or not to show the plot with raw templates
+            %Staplot whether or not to show the bar plot with each raw templates
+            %Output--
+            %Sig.NumTemplateRawUnRegu Raw templates numbers
+            %Sig.TemplateRawUnRegu a cell with each cell of corresponding raw templates data
+            %Sig.TemplateRawUnReguCounts two columns vector, first column count numbers for corresponding raw templates, second column for the count percentage of total spikes
             if nargin == 1 || isempty(ClusterNum)
                 if length(theSignalAnalysis.RawTemClusterFeaturesNorm)>=15
                     ClusterNum = evalclusters(theSignalAnalysis.RawTemClusterFeaturesNorm,'kmeans','silhouette','KList',1:15);
@@ -614,14 +628,13 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
             %Regulated the raw template, take from left side min to peak to
             %right side min
-            %             Removing the noisy templates and making raw templates fine
-            %             [theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
-            %             Input--
-            %             ManSelectedNum a row vector of selected numbers of raw templates to perform the fine process.if it leaves as blank it will only take the raw templates more than 15%
-            %             Plotstates Whether or not to show the fine templates plot e.g. 'y'
-            %             Output--
-            %             Sig.TemplatateRawRegu A cell with fine templates
-            %             Sig.TemplatateRawReguNum A vector with selected number
+            %Removing the noisy templates and making raw templates fine
+            %Input--
+            %ManSelectedNum a row vector of selected numbers of raw templates to perform the fine process.if it leaves as blank it will only take the raw templates more than 15%
+            %Plotstates Whether or not to show the fine templates plot e.g. 'y'
+            %Output--
+            %Sig.TemplatateRawRegu A cell with fine templates
+            %Sig.TemplatateRawReguNum A vector with selected number
             if nargin == 1 || isempty(ManSelectedNum)
                 ManSelectedNum = find(theSignalAnalysis.TemplateRawUnReguCounts(:,2)>0.15);
                 ManSelectedNum = ManSelectedNum';
@@ -656,14 +669,14 @@ classdef SignalAnalysis
         
         function [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
             %[theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
-            %             Perform the template matching with the fine templates
-            %             [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
-            %             --Input
-            %             Plotstates Whether or not to show the similarity stem plots
-            %             -Output
-            %             Sig.SimilarityLag it's a cell. The first dimension is the
-            %             template's number, the first column is the cosine similarity
-            %             of each template, and the second is the corresponding interval for each similarity point in time. The left point defines the interval plus the template length as the right point.
+            %Perform the template matching with the fine templates
+            %[theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
+            %--Input
+            %Plotstates Whether or not to show the similarity stem plots
+            %-Output
+            %Sig.SimilarityLag it's a cell. The first dimension is the
+            %template's number, the first column is the cosine similarity
+            %of each template, and the second is the corresponding interval for each similarity point in time. The left point defines the interval plus the template length as the right point.
             Similag = cell(size(theSignalAnalysis.TemplatateRawRegu,1),2);
             %the gpuarray is not proficent for the cross-correlation
             theSignalAnalysis.Test_signal_offset = gather(theSignalAnalysis.Test_signal_offset);
@@ -708,12 +721,22 @@ classdef SignalAnalysis
             end
             
         end
-        function [theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurev)
+        function [theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurve)
             %[theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurev)
             %filter some matched signal according to the features of the
             %templates, and merge the multiply matches
             % create a cell, first col is the matched two sides by template
-            % mtaching, second col is the filtered by std and ratio 
+            % mtaching, second col is the filtered by std and ratio
+            %             --Input
+            %             SimilarityLevel Similarity threshold by default is set as 0.9
+            %             StdFiltercoeff, computed the correlated template's standard deviation(Temstd) and compared the matched span's standard deviation with StdFiltercoeff * Temstd. If it is smaller, then filter out the span. Mainly filter extreme short spikes. by default set as 0.35
+            %             HeightWidthratioCoeff, computed the ratio of the template's height and width ratio (TemRatio) and compared the matched spa's height-width ratio n with HeightWidthratioCoeff * TemRatio. If it is smaller, then filter out the span. Mainly filter extremely uneven spikes. by default as 0.35
+            %             EachTemplateMatchCurve Whether or not to show the span matched by each template, color same as the generated templates.
+            %             TotalTemplateMatchCurve Whether or not to show all merged spans of templates on the curve.
+            %             --Output
+            %             Sig.TemplatateMatchedInte A three-column matrix matched interval, first column left point, second column right point, third column peak point, they are all in indices of the sig.test_signal.
+            %             Sig.AMInteSig The data in each interval, the shorter span, get fed with zero to reach the same length.
+            %
             PeaksTim = cell(size(theSignalAnalysis.TemplatateRawRegu,1),2);
             for i = 1:size(theSignalAnalysis.TemplatateRawRegu,1)
                 [~,PeaksIdx] = findpeaks(theSignalAnalysis.SimilarityLag{i,1},"MinPeakProminence",SimilarityLevel);
@@ -920,7 +943,7 @@ classdef SignalAnalysis
                 end
             end
             
-            if ismember(TotalTemplateMatchCurev,theSignalAnalysis.BinaryY)
+            if ismember(TotalTemplateMatchCurve,theSignalAnalysis.BinaryY)
                 figure;
                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
                 xlim([min(theSignalAnalysis.Test_time) max(theSignalAnalysis.Test_time)])
