@@ -58,7 +58,8 @@ As stated in the paper, we denoise the signal by using a lowpass filter and unde
 ```
 The output will be the 3D plot below. The time axis may differ:
 
-![stftCATA1](https://user-images.githubusercontent.com/100134089/224954832-f8a181a1-0020-407c-a0c7-f6e5dad1f0d2.svg)
+![stftCATA1](https://user-images.githubusercontent.com/100134089/234817164-388d9127-ccb7-436e-9be0-7558cd55fafa.png)
+
 
 If you set the frequency like this:
 
