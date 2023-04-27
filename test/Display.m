@@ -56,7 +56,7 @@ Sig2 = Sig2.GeAMTrainSet('N','Y',"N");
 Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
 Sig2 = Sig2.KmeansGeAMSigTem(3,"Y","Y");
 %%
-Sig3 = Sig2.KmeansGeAMSigTem(3,"Y","Y");
+Sig3 = Sig2.KmeansGeAMSigTem([],"Y","Y");
 %% Rematching Once 
 % it will replace the regulated raw templates by the new templates 
 % Sig1 = Sig1.Rematching(6,"Y","Y");

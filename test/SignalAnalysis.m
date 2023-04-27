@@ -962,6 +962,15 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis)
             %Genearte the traning set for after the template matching
             %SlopeL,SlopeR,Range,RaltiveLoc
+            %             Input--
+            %             HeightFilter Whether or not to use the height threshold refilter, the matched span works for the deficient noise device by default is no
+            %             NumPlot Whether or not to show elbow method to select centroids numbers
+            %             SilPlot Whether or not to show silhouette score plot to select the centroid numbers
+            %             Output--
+            %             Sig.AMTraningSet is a table containing extracted information; each column contains the corresponding span's information.
+            %             Sig.AMTraningSetNorm Z-score normalized Sig.AMTraningSet
+            %             Sig.AMTemPSigma each column's standard deviation value
+            %             Sig1.AMTemPMu each column's mean value
             DataOffset = zeros(size(theSignalAnalysis.TemplatateMatchedInte,1),5);
             % Height Area caluclate on the oringinal curve
             DataOri  = zeros(size(theSignalAnalysis.TemplatateMatchedInte,1),3);
@@ -1001,7 +1010,7 @@ classdef SignalAnalysis
                 AFTInteProperities = AFTInteProperities(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:);
             end
             theSignalAnalysis.AMTraningSet = array2table(AFTInteProperities,...
-                'VariableNames',{'SlopeL','SlopeR','TimeDuration','RelativePeakLoc','Height','Prominence','Area','ProminenceRangeRatio'});
+                'VariableNames',{'SlopeL','SlopeR','TimeDuration','RelativePeakLoc','Height','Prominence','Area','ProminenceDurationRatio'});
             Pmu = zeros(1,size(AFTInteProperities,2));
             Psigma = zeros(1,size(AFTInteProperities,2));
             AFTInteProperitiesNorm = zeros(size(AFTInteProperities));
@@ -1022,6 +1031,17 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = KmeansGeAMSigTem(theSignalAnalysis,ClusterNum,MarkPlot,TemPlot,TotalPlot)
             %Clustering the intervals by template matching
             %Generating the after matching templates
+            % Input--
+            % ClusterNum selected cluster number, if leave as blank same as the regulated templates's number
+            % MarkPlot whether or not marked the found interval on the original plot
+            % TotalPlot Whether or not show a summary plot with extarcted information, the histograms consider hthe peak amounts, area, height and duration
+            % Output --
+            % Sig.AMTemCen Centroid of the clusters are converted back to the un-normalized data. each column is same as the Sig.AMTraningSet
+            % Sig.AMTemplates A cell contain each templates
+            % Sig.AMTemidx The index of each matched span to the assigned cluster
+            if nargin == 1 || isempty(ClusterNum)
+                ClusterNum = length(theSignalAnalysis.TemplatateRawRegu);
+            end
             if size(theSignalAnalysis.AMTraningSetNorm,1) ~= 1
                 [TemPidx,TemPCen,~,~] = kmeans(theSignalAnalysis.AMTraningSetNorm,ClusterNum,'MaxIter',1000,'Replicates',500);
             else
@@ -1236,7 +1256,14 @@ classdef SignalAnalysis
 %             
 %         end
         function [theSignalAnalysis] = Rematching(theSignalAnalysis,TimesRematching,MarkPlot,TotalPlot)
+            %[theSignalAnalysis] = Rematching(theSignalAnalysis,TimesRematching,MarkPlot,TotalPlot)
             % Remacthching the signal by replacing TemplatateRawRegu by AMTemplates
+            %             --Input
+            %             TimesRematching how many times the rematching is performed, by default as 1
+            %             MarkPlot Whether or not marked the found interval on the original plot
+            %             TotalPlot Whether or not show a summary plot with extarcted information, the histograms consider hthe peak amounts, area, height and duration
+            %             -- Output
+            %             Changes on the output of KmeansGeAMSigTem
             N = length(theSignalAnalysis.AMTemplates);
             for i = 1:TimesRematching
                 theSignalAnalysis.TemplateRawUnRegu = theSignalAnalysis.AMTemplates;
