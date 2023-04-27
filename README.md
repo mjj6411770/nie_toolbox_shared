@@ -158,6 +158,6 @@ Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
 ```
 the first one is the centroid numbers; the second shows the found spikes on the original denoised signal and some related statistic 
 #### Marked original signal:
-![Recluster](https://user-images.githubusercontent.com/100134089/225004286-c07e9bc2-ebbb-4506-85ab-c75cb30980ce.svg)
+![CAT_Marked](https://user-images.githubusercontent.com/100134089/234838196-527aea3f-234b-49a5-a219-2652d2961972.svg)
 #### Reclustering and showing the statistic:
-![STA](https://user-images.githubusercontent.com/100134089/225004251-b02828cc-76f6-4936-a4ae-5bfbdaacf8c5.svg)
+![F5](https://user-images.githubusercontent.com/100134089/234835731-3987d5ae-27ee-43fe-8dc4-9b2836441469.png)
