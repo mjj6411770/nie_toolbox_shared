@@ -169,11 +169,12 @@ classdef SignalAnalysis
         end
         
         function [theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder,Plotstates)
-            %[theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
+            %[theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder,Plotstates)
             %Denoise signal based on FIR lsq low pass filter, changing filter order to see the result
             %            Input --
             %            CutoffFreq the cut-off frequency to apply for FIR filter, the spike frequency can get from stft plot by leaving CutoffFreq empty, suggest running in .m since the in .mlx the plot won't show instantly e.g. 10
             %            FilterOrder the order for the FIR filter also known as term number,  higher the order, shaper the filter at pass band, but higher the delay, we din't perform the zero-phase filtering in this toolbox e.g. 10, can be changed in the command window it will ask wether or not to change, if enter no or nothing it won't change
+            %            Plotstates whether or not showing the plot for the denoised signal, e.g. 'Y'
             %            Output --
             %            Sig.test_signal Denoised signal
             %            Sig.Test_time After denoising the time vector may shift due to the convolution, the filter length of data get abandoned (normally less than 20)

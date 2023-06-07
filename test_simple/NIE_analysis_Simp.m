@@ -44,7 +44,7 @@ Sig = Sig.GeAMTrainSet('N','N',"N");
 % Second clustering
 Sig = Sig.KmeansGeAMSigTem([],"Y","Y");
 % Extracted features and spike index
-Features = Sig.AMTraningSet;
+Features = Sig.AMtrainingSet;
 SpikeIndex = Sig.TemplatateMatchedInte;
 
 
