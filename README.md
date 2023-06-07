@@ -26,14 +26,17 @@ The project is based on Matlab. Please install the following add-ons to test the
     
 ## This toolbox will follow the flow chart below
 
-![Flow chart](https://user-images.githubusercontent.com/100134089/224944354-9ec909b2-6663-45c2-b86c-1dfd22031aa9.svg)
+![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/28c88ff4-859f-4eec-aadc-be5781d61ca4)
+
 
 
 
 ###
 ## To start
 
-Inside the "/test" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.mlx," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
+Inside the "/test_detailed" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.mlx," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
+Inside the "/test_simple" it's the packed example with the glucose photo oxidation example. The code is the same as the detailed one, but it's more straightforward to use.
+## Importing the data
 
 ```matlab
     Sig1 = SignalAnalysis(names_Str(1));
