@@ -3,42 +3,47 @@ dinfo = dir('*.txt');
 names_cell = {dinfo.name}';
 names_Str = convertCharsToStrings(names_cell)
 %% import data
-Sig1 = SignalAnalysis(names_Str(2));
+Sig1 = SignalAnalysis(names_Str(1));
 Sig2 = SignalAnalysis(names_Str(3));
-Back1 = SignalAnalysis(names_Str(1));
+Back1 = SignalAnalysis(names_Str(2));
 Back2 = SignalAnalysis(names_Str(4));
 %% preprocess
-Sig1 = Sig1.Preprocess("PA","N","Y","Y");
-Back1 = Back1.Preprocess("PA","N","Y","Y");
-Sig2 = Sig2.Preprocess("A","Y","N","N");
-Back2 = Back2.Preprocess("A","Y","N","N");
+Sig1 = Sig1.Preprocess("A","Y","N","N");
+Back1 = Back1.Preprocess("A","Y","N","N");
+Sig2 = Sig2.Preprocess("PA","N","Y","Y");
+Back2 = Back2.Preprocess("PA","N","Y","Y");
 %% Denoise
-Sig1 = Sig1.Denoise(15,10);
+Sig1 = Sig1.Denoise(10,10);
 %%
-Sig2 = Sig2.Denoise(10,10);
+Sig2 = Sig2.Denoise(15,10);
 %% BackgroundSubtraction Sig1
-Winsize = 100;
+Winsize = 2000;
 Sig1 = Sig1.BgSub(Winsize,'y');
 Back1 = Back1.BgSub(1000,'N');
 %% BackGroundsub Sig2
-Winsize = 600;
+Winsize = 100;
 Sig2 = Sig2.BgSub(Winsize,'y');
 Back2 = Back2.BgSub(1000,'N');
 %% flip find peaks
-Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset");
-Sig2 = Sig2.FlipFindPeak(Back2.Test_signal_offset,'Oxi','Y',"Offset");
+Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Oxi','Y',"Offset");
+Sig2 = Sig2.FlipFindPeak(Back2.Test_signal_offset,'Red','Y',"Offset");
 %% TraningSet generation
 Sig1 = Sig1.GeRawTrainSet('Y','Y');
 Sig2 = Sig2.GeRawTrainSet('Y','Y');
 %% Clustering and Raw unregularated templates generation
-Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
-Sig2 = Sig2.KmeansGeRawSigTem(5,'Y',"Y");
-%% Regulated Templates
-Sig1 = Sig1.RawtemplatesReguFunc([1,2],'Y');
-Sig2 = Sig2.RawtemplatesReguFunc([1,2,4,5],'Y');
-%% Template Matching
+Sig1 = Sig1.KmeansGeRawSigTem(6,'Y',"Y");
+Sig2 = Sig2.KmeansGeRawSigTem(3,'Y',"Y");
+
+%%
+Sig1 = Sig1.RawtemplatesReguFunc([1,2,3,4,5,6],'Y');
+Sig2 = Sig2.RawtemplatesReguFunc([1,3],'Y');
+
+%%
+tic
 Sig1 = Sig1.Templatematching('Y');
+toc
 Sig2 = Sig2.Templatematching('Y');
+
 %% Template filtered the peaks Sig1
 Sim = 0.9;
 StdCoeff = 0.35;
@@ -49,11 +54,12 @@ Sim = 0.9;
 StdCoeff = 0.35;
 HeightWidth = 0.35;
 Sig2 = Sig2.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
+
 %% TraninignSet ReClustering
 Sig1 = Sig1.GeAMTrainSet('Y','Y',"N");
 Sig2 = Sig2.GeAMTrainSet('N','Y',"N");
 %% ReClustering and generate the templates
-Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
+Sig1 = Sig1.KmeansGeAMSigTem(3,"Y","Y");
 Sig2 = Sig2.KmeansGeAMSigTem(3,"Y","Y");
 %%
 Sig3 = Sig2.KmeansGeAMSigTem([],"Y","Y");

@@ -145,7 +145,7 @@ classdef SignalAnalysis
                 Fs = round(1/Ts);
                 x = theSignalAnalysis.Test_signal;
                 ts = theSignalAnalysis.Test_time - theSignalAnalysis.Test_time(1);
-                y = resample(gather(x),gather(ts),gather(Fs));
+                y = resample(x,ts,Fs);
                 ts2 = (0:(length(y)-1))*Ts;
                 if ismember(ResamplePlot,theSignalAnalysis.BinaryY)
                     figure;
@@ -342,7 +342,7 @@ classdef SignalAnalysis
             end
             theSignalAnalysis.Reactionstates = ReactionStates;
             %H_low is the 20 - 80% std of the blank Signal
-            H_low = gather(2*std(BackgroundSigOffset(...
+            H_low = gather(1.8*std(BackgroundSigOffset(...
                 ceil(length(BackgroundSigOffset)*0.2):ceil(length(BackgroundSigOffset)*0.8))));
             %             % https://doi.org/10.1016/j.coelec.2020.05.010
             %             lowestCurrent = gather(1e12 * 2100*1.60 * 1e-19 * theSignalAnalysis.Test_freq);
@@ -667,6 +667,7 @@ classdef SignalAnalysis
             end
         end
         
+        
         function [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
             %[theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
             %Perform the template matching with the fine templates
@@ -721,6 +722,7 @@ classdef SignalAnalysis
             end
             
         end
+       
         function [theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurve)
             %[theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurev)
             %filter some matched signal according to the features of the
@@ -958,6 +960,8 @@ classdef SignalAnalysis
                 end
             end
         end
+        
+        
         function [theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis,HeightFilter,NumPlot,SilPlot)
             %[theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis)
             %Genearte the traning set for after the template matching
