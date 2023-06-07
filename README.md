@@ -26,7 +26,8 @@ The project is based on Matlab. Please install the following add-ons to test the
     
 ## This toolbox will follow the flow chart below
 
-![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c4b943)
+![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/9b5d852f-9b35-4faf-9247-8da18381d116)
+com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c4b943)
 
 
 
@@ -75,7 +76,7 @@ It will output the following curve:
 It will leave an input window on the command window to ask if the user would like to change the order and the orders to be changed.
 
 ## Background Subtraction 
-The background subtraction is made by making the smooth data based on the roloess; you can input the argument as the bigger the window size, the better fitting the trend line. The last argument is whether or not to show the plot for the fitted line and offset signal, the 
+The background subtraction is made by making the smooth data based on the roloess; you can input the argument as the bigger the window size, the better fitting the trend line. The last argument is whether to show the plot for the fitted line and offset signal, the 
 
 ```matlab
   Winsize = 100;
@@ -90,7 +91,7 @@ This step is based on the blank signal to generate the height threshold and perf
 ```matlab
 Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset"); 
 ```
-This method accepts four arguments, the first is the detrended blank signal, and the next is whether the NIE signal is oxidative or reductive. In 'Red' or 'Oxi', the third argument is to show the plot and show the found peaks on the offset or original tren signal, the output as below:
+This method accepts four arguments, the first is the de-trended blank signal, and the next is whether the NIE signal is oxidative or reductive. In 'Red' or 'Oxi', the third argument is to show the plot and show the found peaks on the offset or original trend signal, the output as below:
 ![FindPeaksCAT](https://user-images.githubusercontent.com/100134089/224968188-8bab673a-283b-4c9e-990f-4a18a26fb868.svg)
 
 ## Generating the training sets and Clustering 
