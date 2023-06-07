@@ -12,9 +12,9 @@ classdef SignalAnalysis
         Test_freq
         %Background Subtraction
         Test_signal_offset
-        %Backgorund by rloess method
+        %Background by rloess method
         Test_signal_trendline
-        %Reaction satates specify as 'Oxi' or 'Red'
+        %Reaction states specify as 'Oxi' or 'Red'
         Reactionstates
         %the 2 times std of offset back
         BackGroundHeightThr
@@ -22,11 +22,11 @@ classdef SignalAnalysis
         FlipFindInte
         %found peaks properties height location width(
         PeaksFound
-        %Trainset Raw Tem
+        %Training set Raw Tem
         TrainingSignalOri
         %mean value for the raw templates clustering
         RawTemFeaturesMu
-        %varence value for the raw templates clustering
+        %variance value for the raw templates clustering
         RawTemFeaturesSigma
         %Raw templates clustering features (4 basic features +  height
         %width relative location)
@@ -35,7 +35,7 @@ classdef SignalAnalysis
         RawTemClusterFeaturesNorm
         %Numbers of raw unregulated templates
         NumTemplateRawUnRegu
-        %Unregulared Raw Unregulated templates
+        %Tuned Raw Unregulated templates
         TemplateRawUnRegu
         %Counts for each Unregulated templates
         TemplateRawUnReguCounts
@@ -49,13 +49,13 @@ classdef SignalAnalysis
         TemplatateMatchedInte
         %Template Matched interval Signal
         AMInteSig
-        %After template matching traning set
-        AMTraningSet
-        %After template matching traning set Norm
-        AMTraningSetNorm
-        %After template matching traning set Sigma
+        %After template matching training set
+        AMtrainingSet
+        %After template matching training set Norm
+        AMtrainingSetNorm
+        %After template matching training set Sigma
         AMTemPSigma
-        %After template matching traning set Mu
+        %After template matching training set Mu
         AMTemPMu
         %After template matching ReNormed centroids
         AMTemCen
@@ -63,7 +63,7 @@ classdef SignalAnalysis
         AMTemplates
         %After matching the interval index
         AMTemidx
-%         %Data comuted by conventional method by computing area of Guassian
+%         %Data computed by conventional method by computing area of Guassian
 %         %distribution
 %         DataGaussain
 %         %simulated gaussain siganl
@@ -81,7 +81,7 @@ classdef SignalAnalysis
         function thisSignalAnalysis = SignalAnalysis(Filename)
             %Input the type of files of the raw signal'*.txt';
             %thisSignalAnalysis = SignalAnalysis(Filename)
-            % Input -- File name as a string, by defalut, consider there are other text string in the data file
+            % Input -- File name as a string, by default, consider there are other text string in the data file
             % Output -- Sig.test_signal Original signal vector in original unit
             %           Sig.Test_time Original time vector in original unit
             %           Sig.Test_freq test frequency depends on the test_time vector
@@ -102,7 +102,7 @@ classdef SignalAnalysis
             %[theSignalAnalysis] = Preprocess(theSignalAnalysis,OriginalUnit,Timeshift,Resample)
             % preprocess for the SEE signal, change the unit, shift the
             % time axis, and resample the data in case uneven sampling
-%             Input -- OriginalUnit a string of orgiginal data's unit e.g. 'pA', it will convert different current into pA in this toolbox
+%             Input -- OriginalUnit a string of original data's unit e.g. 'pA', it will convert different current into pA in this toolbox
 %                      Timeshift wether or not performing the time shift, will shift the test_time starts from 0, input string as e.g. 'y'
 %                      Resample wether or not to perform the resampling for uneven sampling, input string as e.g. 'y'
 %                      ResamplePlot wether or not to show the plot with and without resampling, input string as e.g. 'y'
@@ -168,9 +168,9 @@ classdef SignalAnalysis
             
         end
         
-        function [theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
+        function [theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder,Plotstates)
             %[theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
-            %Denoise signal bsed on FIR lsq low pass filter, changing filterorder to see the result
+            %Denoise signal based on FIR lsq low pass filter, changing filter order to see the result
             %            Input --
             %            CutoffFreq the cut-off frequency to apply for FIR filter, the spike frequency can get from stft plot by leaving CutoffFreq empty, suggest running in .m since the in .mlx the plot won't show instantly e.g. 10
             %            FilterOrder the order for the FIR filter also known as term number,  higher the order, shaper the filter at pass band, but higher the delay, we din't perform the zero-phase filtering in this toolbox e.g. 10, can be changed in the command window it will ask wether or not to change, if enter no or nothing it won't change
@@ -180,8 +180,9 @@ classdef SignalAnalysis
             if nargin ==1
                 CutoffFreq = [];
                 FilterOrder = 20;
+                Plotstates = N;
             end
-            %if not specifiy the cutoff frequency, popout the stft plot
+            %if not specify the cutoff frequency, popup the stft plot
             if isempty(CutoffFreq)
                 figure('Name',"Stft transfer of the signal")
                 stft(theSignalAnalysis.Test_signal,theSignalAnalysis.Test_freq)
@@ -257,21 +258,26 @@ classdef SignalAnalysis
                     median(theSignalAnalysis.Test_signal)/median(Sig_fil)]);
                 %                 RandIdx = randi(length(theSignalAnalysis.Test_signal),[1000,1]);
                 %                 scale_factor = mean(theSignalAnalysis.Test_signal(RandIdx)./Sig_fil(RandIdx));
-                figure('Name',sprintf('Cutoff frerquency:%d Hz,Order:%d \n',CutoffFreq,N));
-                plot(theSignalAnalysis.Test_time(fil_length:end),Sig_fil*scale_factor,'DisplayName','Filtered Sig');
-                hold on
-                plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal,'DisplayName','Original')
-                hold off;
-                title(sprintf('Cutoff frerquency:%d Hz,Order:%d \n',CutoffFreq,N))
-                xlabel("Time[s]")
-                ylabel("Current [pA]")
-                xlim([0 gather(max(theSignalAnalysis.Test_time))])
-                legend show
-                legend box off
-                legend('Location', 'bestoutside')
-                Flag = input('if change the order for the filter, input yes else no: ',"s");
-                if ismember(Flag,theSignalAnalysis.BinaryY)
-                    N = input('The order to change: ');
+                if ismember(Plotstates,theSignalAnalysis.BinaryY)
+                    figure('Name',sprintf('Cutoff frerquency:%d Hz,Order:%d \n',CutoffFreq,N));
+                    plot(theSignalAnalysis.Test_time(fil_length:end),Sig_fil*scale_factor,'DisplayName','Filtered Sig');
+                    hold on
+                    plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal,'DisplayName','Original')
+                    hold off;
+                    title(sprintf('Cutoff frerquency:%d Hz,Order:%d \n',CutoffFreq,N))
+                    xlabel("Time[s]")
+                    ylabel("Current [pA]")
+                    xlim([0 gather(max(theSignalAnalysis.Test_time))])
+                    legend show
+                    legend box off
+                    legend('Location', 'bestoutside')
+                    Flag = input('if change the order for the filter, input yes else no: ',"s");
+                    if ismember(Flag,theSignalAnalysis.BinaryY)
+                        N = input('The order to change: ');
+                    end
+                else
+                    Flag = "No";
+                    continue
                 end
             end
             theSignalAnalysis.Test_time = theSignalAnalysis.Test_time(fil_length:end);
@@ -342,7 +348,7 @@ classdef SignalAnalysis
             end
             theSignalAnalysis.Reactionstates = ReactionStates;
             %H_low is the 20 - 80% std of the blank Signal
-            H_low = gather(1.8*std(BackgroundSigOffset(...
+            H_low = gather(2*std(BackgroundSigOffset(...
                 ceil(length(BackgroundSigOffset)*0.2):ceil(length(BackgroundSigOffset)*0.8))));
             %             % https://doi.org/10.1016/j.coelec.2020.05.010
             %             lowestCurrent = gather(1e12 * 2100*1.60 * 1e-19 * theSignalAnalysis.Test_freq);
@@ -564,6 +570,8 @@ classdef SignalAnalysis
                     ClusterNum = evalclusters(theSignalAnalysis.RawTemClusterFeaturesNorm,'kmeans','silhouette','KList',1:num);
                     ClusterNum = ClusterNum.OptimalK;
                 end
+                Templot = "N";
+                Staplot = "N";
             end
             if isempty(theSignalAnalysis.gpuStates)
                 [SignalInteIdx,FeatureCentroidNorm,~,~] = kmeans(theSignalAnalysis.RawTemClusterFeaturesNorm,ClusterNum,'MaxIter',2000,'Replicates',2000);
@@ -739,6 +747,14 @@ classdef SignalAnalysis
             %             Sig.TemplatateMatchedInte A three-column matrix matched interval, first column left point, second column right point, third column peak point, they are all in indices of the sig.test_signal.
             %             Sig.AMInteSig The data in each interval, the shorter span, get fed with zero to reach the same length.
             %
+            if nargin == 1
+                SimilarityLevel = 0.9;
+                StdFiltercoeff = 0.35;
+                HeightWidthratioCoeff = 0.35;
+                EachTemplateMatchCurve = "N";
+                TotalTemplateMatchCurve = "N";
+            end
+            %the matched interval
             PeaksTim = cell(size(theSignalAnalysis.TemplatateRawRegu,1),2);
             for i = 1:size(theSignalAnalysis.TemplatateRawRegu,1)
                 [~,PeaksIdx] = findpeaks(theSignalAnalysis.SimilarityLag{i,1},"MinPeakProminence",SimilarityLevel);
@@ -964,15 +980,15 @@ classdef SignalAnalysis
         
         function [theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis,HeightFilter,NumPlot,SilPlot)
             %[theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis)
-            %Genearte the traning set for after the template matching
+            %Genearte the training set for after the template matching
             %SlopeL,SlopeR,Range,RaltiveLoc
             %             Input--
             %             HeightFilter Whether or not to use the height threshold refilter, the matched span works for the deficient noise device by default is no
             %             NumPlot Whether or not to show elbow method to select centroids numbers
             %             SilPlot Whether or not to show silhouette score plot to select the centroid numbers
             %             Output--
-            %             Sig.AMTraningSet is a table containing extracted information; each column contains the corresponding span's information.
-            %             Sig.AMTraningSetNorm Z-score normalized Sig.AMTraningSet
+            %             Sig.AMtrainingSet is a table containing extracted information; each column contains the corresponding span's information.
+            %             Sig.AMtrainingSetNorm Z-score normalized Sig.AMtrainingSet
             %             Sig.AMTemPSigma each column's standard deviation value
             %             Sig1.AMTemPMu each column's mean value
             DataOffset = zeros(size(theSignalAnalysis.TemplatateMatchedInte,1),5);
@@ -1013,7 +1029,7 @@ classdef SignalAnalysis
                 theSignalAnalysis.TemplatateMatchedInte = theSignalAnalysis.TemplatateMatchedInte(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:); 
                 AFTInteProperities = AFTInteProperities(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:);
             end
-            theSignalAnalysis.AMTraningSet = array2table(AFTInteProperities,...
+            theSignalAnalysis.AMtrainingSet = array2table(AFTInteProperities,...
                 'VariableNames',{'SlopeL','SlopeR','TimeDuration','RelativePeakLoc','Height','Prominence','Area','ProminenceDurationRatio'});
             Pmu = zeros(1,size(AFTInteProperities,2));
             Psigma = zeros(1,size(AFTInteProperities,2));
@@ -1021,7 +1037,7 @@ classdef SignalAnalysis
             for i = 1:size(AFTInteProperities,2)
                 [AFTInteProperitiesNorm(:,i),Pmu(i),Psigma(i)] = SignalAnalysis.featureNormalize(AFTInteProperities(:,i));
             end
-            theSignalAnalysis.AMTraningSetNorm = AFTInteProperitiesNorm;
+            theSignalAnalysis.AMtrainingSetNorm = AFTInteProperitiesNorm;
             theSignalAnalysis.AMTemPSigma = Psigma;
             theSignalAnalysis.AMTemPMu = Pmu;
             if size(AFTInteProperities,1) ~= 1
@@ -1040,16 +1056,16 @@ classdef SignalAnalysis
             % MarkPlot whether or not marked the found interval on the original plot
             % TotalPlot Whether or not show a summary plot with extarcted information, the histograms consider hthe peak amounts, area, height and duration
             % Output --
-            % Sig.AMTemCen Centroid of the clusters are converted back to the un-normalized data. each column is same as the Sig.AMTraningSet
+            % Sig.AMTemCen Centroid of the clusters are converted back to the un-normalized data. each column is same as the Sig.AMtrainingSet
             % Sig.AMTemplates A cell contain each templates
             % Sig.AMTemidx The index of each matched span to the assigned cluster
             if nargin == 1 || isempty(ClusterNum)
                 ClusterNum = length(theSignalAnalysis.TemplatateRawRegu);
             end
-            if size(theSignalAnalysis.AMTraningSetNorm,1) ~= 1
-                [TemPidx,TemPCen,~,~] = kmeans(theSignalAnalysis.AMTraningSetNorm,ClusterNum,'MaxIter',1000,'Replicates',500);
+            if size(theSignalAnalysis.AMtrainingSetNorm,1) ~= 1
+                [TemPidx,TemPCen,~,~] = kmeans(theSignalAnalysis.AMtrainingSetNorm,ClusterNum,'MaxIter',1000,'Replicates',500);
             else
-                TemPidx = 1; TemPCen = theSignalAnalysis.AMTraningSetNorm;
+                TemPidx = 1; TemPCen = theSignalAnalysis.AMtrainingSetNorm;
             end
             IntecenRenorm = zeros(size(TemPCen));
             for i = 1:size(TemPCen,2)
@@ -1059,7 +1075,7 @@ classdef SignalAnalysis
             theSignalAnalysis.AMTemCen = IntecenRenorm;
             theSignalAnalysis.AMTemidx = TemPidx;
             TemplateRawGe = SignalAnalysis.RoughTemplateGe(theSignalAnalysis...
-                ,theSignalAnalysis.AMInteSig,theSignalAnalysis.AMTraningSet,...
+                ,theSignalAnalysis.AMInteSig,theSignalAnalysis.AMtrainingSet,...
                 ClusterNum,TemPidx);
             SelectNum = 1:1:ClusterNum;
             TemStacountInte = zeros(ClusterNum,2);
@@ -1116,17 +1132,17 @@ classdef SignalAnalysis
                 ylabel('Counts')
                 %Area distribution
                 nexttile(3,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.Area,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
+                histogram(theSignalAnalysis.AMtrainingSet.Area,ceil(sqrt(size(theSignalAnalysis.AMtrainingSet,1))))
                 xlabel('Area[pC]')
                 ylabel('Counts')
                 %Height
                 nexttile(5,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.Height,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
+                histogram(theSignalAnalysis.AMtrainingSet.Height,ceil(sqrt(size(theSignalAnalysis.AMtrainingSet,1))))
                 ylabel('Counts')
                 xlabel('Height[pA]')
                 %range
                 nexttile(7,[4 2]);
-                histogram(theSignalAnalysis.AMTraningSet.TimeDuration,ceil(sqrt(size(theSignalAnalysis.AMTraningSet,1))))
+                histogram(theSignalAnalysis.AMtrainingSet.TimeDuration,ceil(sqrt(size(theSignalAnalysis.AMtrainingSet,1))))
                 ylabel('Counts')
                 xlabel('TimeDuration[s]')
                 % Avgtemplates
@@ -1150,28 +1166,28 @@ classdef SignalAnalysis
                 %Area Each Tem
                 for i = 1:ClusterNum
                     axArea(i) = nexttile(i*16 + 19,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.Area(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    histogram(theSignalAnalysis.AMtrainingSet.Area(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
                     title(sprintf('Area Distribution Type %d',i))
                 end
-                xlim(axArea,[0 max(theSignalAnalysis.AMTraningSet.Area)])
+                xlim(axArea,[0 max(theSignalAnalysis.AMtrainingSet.Area)])
                 xlabel(axArea,'Area[pC]')
                 ylabel(axArea,'Counts')
                 %Height Each Tem
                 for i = 1:ClusterNum
                     axHeight(i) = nexttile(i*16 + 21,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.Height(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    histogram(theSignalAnalysis.AMtrainingSet.Height(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
                     title(sprintf('Height Distribution Type %d',i))
                 end
-                xlim(axHeight,[0 max(theSignalAnalysis.AMTraningSet.Height)])
+                xlim(axHeight,[0 max(theSignalAnalysis.AMtrainingSet.Height)])
                 xlabel(axHeight,'Height[pA]')
                 ylabel(axHeight,'Counts')
                 %Range
                 for i = 1:ClusterNum
                     axRange(i) = nexttile(i*16 + 23,[2 2]);
-                    histogram(theSignalAnalysis.AMTraningSet.TimeDuration(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
+                    histogram(theSignalAnalysis.AMtrainingSet.TimeDuration(TemPidx == i),ceil(sqrt( nnz(TemPidx == i))),'FaceColor',theSignalAnalysis.AMIntecolors(i,:))
                     title(sprintf('Duration Distribution Type %d',i))
                 end
-                xlim(axRange,[0 max(theSignalAnalysis.AMTraningSet.TimeDuration)])
+                xlim(axRange,[0 max(theSignalAnalysis.AMtrainingSet.TimeDuration)])
                 xlabel(axRange,'TimeDuration[s]')
                 ylabel(axRange,'Counts')
                 
@@ -1215,7 +1231,7 @@ classdef SignalAnalysis
 % %             %area
 % %             DCompare{1} = zeros(size(idxDG,1),3);
 % %             DCompare{1}(:,1) = DGaussain(idxDG,3);
-% %             DCompare{1}(:,2) = theSignalAnalysis.AMTraningSet.Area(idxTM);
+% %             DCompare{1}(:,2) = theSignalAnalysis.AMtrainingSet.Area(idxTM);
 % %             DCompare{1}(:,3) = DCompare{1}(:,1) - DCompare{1}(:,2);
 % %             %histogram(DCompare{1}(:,3))
 % %             %mean(DCompare{1}(:,3));
@@ -1223,15 +1239,15 @@ classdef SignalAnalysis
 % %             %time range
 % %             DCompare{2} = zeros(size(idxDG,1),3);
 % %             DCompare{2}(:,1) = DGaussain(idxDG,2)*6;
-% %             DCompare{2}(:,2) = theSignalAnalysis.AMTraningSet.TimeDuration(idxTM);
+% %             DCompare{2}(:,2) = theSignalAnalysis.AMtrainingSet.TimeDuration(idxTM);
 % %             % in ms
 % %             DCompare{2}(:,3) = (DCompare{2}(:,1) - DCompare{2}(:,2))*1e3;
 %             %mean(DCompare{2}(:,3));
 %             %NUMBERS DIFFERENCE
-%             %size(theSignalAnalysis.AMTraningSet,1)
+%             %size(theSignalAnalysis.AMtrainingSet,1)
 %             %size(DGaussain,1)
 %             %num the old way in fact more?
-%             %mean(size(DGaussain,1) - size(theSignalAnalysis.AMTraningSet,1)
+%             %mean(size(DGaussain,1) - size(theSignalAnalysis.AMtrainingSet,1)
 %             if ismember(PlotState,theSignalAnalysis.BinaryY)
 %                 figure;
 %                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
@@ -1385,10 +1401,10 @@ classdef SignalAnalysis
             X =  Xnorm * sigma + mu;
         end
         
-        function TemplateRawGe = RoughTemplateGe(theSignalAnalysis,TraningSignal,ClusterFeatures,ClusterNum,SignalIntervalIdx)
+        function TemplateRawGe = RoughTemplateGe(theSignalAnalysis,trainingSignal,ClusterFeatures,ClusterNum,SignalIntervalIdx)
             TemplateRawGe = cell(ClusterNum,1);
             for i = 1:ClusterNum
-                SignInte = TraningSignal(SignalIntervalIdx == i,:);
+                SignInte = trainingSignal(SignalIntervalIdx == i,:);
                 %if there is only one signal in this cluster
                 if size(SignInte,1) == 1
                     TemplateRawGe{i}  =  nonzeros(SignInte);

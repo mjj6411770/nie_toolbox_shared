@@ -1,0 +1,44 @@
+function [Features,SpikeIndex] = NIE_analysis_Simp(Datafilename,Blankfile,unit,ReactionStates)
+%[Features,SpikeIndex] = NIE_analysis_Simp(Datafilename,unit)
+%   just a function to compress all the step in details 
+%   Datafilename: the name of the data file
+%   Blankfile: the name of the blank file
+%   unit: the unit of the current by default is "A"
+%   ReactionStates: the reaction states of the data file as "Oxi" or "Red" by default is "Oxi"
+%   Features: the features of the spikes
+%   SpikeIndex: the index of the spikes contains left side, right side and peak index
+%   for details check the folder test_detailed
+if nargin < 3
+    unit = "A";
+    ReactionStates = "Oxi";
+end
+if nargin < 4
+    ReactionStates = "Oxi";
+end
+
+Features = 0;
+SpikeIndex = 0;
+Sig = SignalAnalysis(Datafilename);
+Blank = SignalAnalysis(Blankfile);
+Sig = Sig.Preprocess(unit,"Y","N","N");
+Blank = Blank.Preprocess(unit,"Y","N","N");
+Sig = Sig.Denoise(15,10,"No");
+Sig = Sig.BgSub;
+Blank = Blank.BgSub;
+Sig = Sig.FlipFindPeak(Blank.Test_signal_offset,ReactionStates,"No");
+Sig = Sig.GeRawTrainSet('No','No');
+Sig = Sig.KmeansGeRawSigTem;
+Sig = Sig.RawtemplatesReguFunc([],'N');
+Sig = Sig.Templatematching('No');
+Sig = Sig.TemplatematchingFiltering;
+Sig = Sig.GeAMTrainSet('N','N',"N");
+Sig = Sig.KmeansGeAMSigTem([],"Y","Y");
+Features = sig.AM
+1;
+
+
+
+
+
+end
+
