@@ -26,7 +26,7 @@ The project is based on Matlab. Please install the following add-ons to test the
     
 ## This toolbox will follow the flow chart below
 
-![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/28c88ff4-859f-4eec-aadc-be5781d61ca4)
+![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c4b943)
 
 
 
