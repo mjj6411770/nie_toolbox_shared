@@ -1,7 +1,7 @@
 
-# NIE data-driven template matching 
+# Automated analysis of NIE signals 
 
-It is a simple toolbox for using data-driven template matching in nano-impact electrochemistry signal analysis.1
+It is a simple algorithm for using data-driven template matching in nano-impact electrochemistry signal analysis.1
 
 
 
@@ -16,7 +16,7 @@ It is a simple toolbox for using data-driven template matching in nano-impact el
 
 ## Installation
 
-The project is based on Matlab. Please install the following add-ons to test the package 
+The analysis algorithm is based on Matlab. Please install the following add-ons to test the package: 
 
 ```matlab
     %% Signal processing toolbox
@@ -24,7 +24,7 @@ The project is based on Matlab. Please install the following add-ons to test the
     %% Parallel Computing Toolbox
 ```
     
-## This toolbox will follow the flow chart below
+## The algorithm follows the flowchart below
 
 ![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/9b5d852f-9b35-4faf-9247-8da18381d116)
 com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c4b943)
@@ -35,7 +35,7 @@ com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c
 ###
 ## To start
 
-Inside the "/test_detailed" directory, there are two files in the .m format. The first one, "SignalAnalysis," is a toolbox that enables you to conduct the analysis, while the second .m file, "Display.mlx," is a live editor file that allows you to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the paper. The initial section of the code is responsible for importing the data and creating new classes based on the folder's name and the data being imported.
+Inside the "/test_detailed" directory, there are two files in the .m format. The first one, "SignalAnalysis," is the algorithm that enables NIE data analysis, while the second .m file, "Display.mlx," is a live editor file that permits to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the manuscript.
 Inside the "/test_simple" it's the packed example with the glucose photo oxidation example. The code is the same as the detailed one, but it's more straightforward to use.
 ## Importing the data
 
@@ -45,7 +45,7 @@ Inside the "/test_simple" it's the packed example with the glucose photo oxidati
 
 ## Resampling 
 
-The paper states that the unevenly sampled signal is integrated into the preprocess method.
+This part of the code is only used for catalase NIE data and can be omited for the data recorded with commonly used potentiostats.
 
 ```matlab
   Sig1 = Sig1.Preprocess("PA","N","Y","Y");
