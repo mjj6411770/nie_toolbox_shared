@@ -26,9 +26,7 @@ The analysis algorithm is based on Matlab. Please install the following add-ons 
     
 ## The algorithm follows the flowchart below
 
-![S1b](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/9b5d852f-9b35-4faf-9247-8da18381d116)
-com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c4b943)
-
+![S1](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/32f6f62a-0d71-4637-b8f0-ac92df68d3da)
 
 
 
@@ -55,6 +53,7 @@ The SpikeLocation is a matrix with the following columns:
     Spike_Left   Spike_Right  Spike_Peak
 ```
 ![image](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/7af06c01-dab1-4ce7-9644-6debf9268798)
+
 Note that the peak Location is expressed is Index instead of the time value in the original signal. The time value can be obtained by multiplying the index by the sampling rate. The sampling rate is 1/100 s in this example.
 
 When you run the code, it will show two plots which are explained in "Generate the new templates marked spikes on an original signal related statistic" section below. The first plot is the original signal with the marked spikes, and the second plot is the statistic of the spikes. The statistic includes the number of spikes, the average height, the average area, and the average prominence of the spikes. 
