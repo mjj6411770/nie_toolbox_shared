@@ -92,7 +92,11 @@ classdef SignalAnalysis
             end
             thisSignalAnalysis.BinaryY = ["Yes","yes","YES","Y","y","OK","ok"];
             thisSignalAnalysis.Filename = Filename;
-            Data = importdata(Filename).data;
+            try
+                Data = importdata(Filename).data;
+            catch
+                Data = importdata(Filename);
+            end
             thisSignalAnalysis.Test_signal = Data(:,2);
             thisSignalAnalysis.Test_time = Data(:,1);
             thisSignalAnalysis.Test_freq  = 1/mean(diff(thisSignalAnalysis.Test_time));
