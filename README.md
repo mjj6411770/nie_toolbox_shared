@@ -37,9 +37,9 @@ There are three .m files and two .txt files in this directory. The first one, "S
 In the "RUN_THIS_FILE.m" 
 there is only one line of the code
 ```matlab
-    [SpikeFeatures, SpikeLocation] = NIE_analysis_Simp("1a_AuNpsNIE.txt","1b_AuNpsBlank.txt","A","OXi");
+    [SpikeFeatures, SpikeLocation] = NIE_analysis_Simp("1a_AuNpsNIE.txt","1b_AuNpsBlank.txt","A","Oxi");
 ```
-Input from the first to the end are NIE data, Blank data, the unit of current in the txt file, and the last is the reaction type, which can be "OXi" or "Red" for oxidative or reductive reaction. The output is the features of the spikes and the location of the spikes in the original signal. The output is shown below:
+Input from the first to the end are NIE data file name, Blank data file name, the unit of current in the txt file, and the last is the reaction type, which can be "Oxi" or "Red" for oxidative or reductive reaction. The output is the features of the spikes and the location of the spikes in the original signal. The output is shown below:
 The SpikeFeatures is a table with the following columns:
 ```matlab
     SpikeFeatures = 
