@@ -1,7 +1,7 @@
 
 # Automated analysis of NIE signals 
 
-It is a simple algorithm for using data-driven template matching in nano-impact electrochemistry signal analysis.1
+It is a simple algorithm for using data-driven template matching in nano-impact electrochemistry signal analysis.
 
 
 
