@@ -194,7 +194,7 @@ classdef SignalAnalysis
                 ax.Children.XData = X1*60;
                 ax.XLim = [min(ax.Children.XData) Inf];
                 ax.XLabel.String = 'Time [s]';
-                ax.YLabel.String = 'Frequenct [Hz]';
+                ax.YLabel.String = 'Frequency [Hz]';
                 CutoffFreq = input('Set a Frequency High limits for the signal in Hz: ');
                 if isempty(CutoffFreq)
                     CutoffFreq = 10;

@@ -1,6 +1,6 @@
 function [Features,SpikeIndex] = NIE_analysis_Simp(Datafilename,Blankfile,unit,ReactionStates)
 %[Features,SpikeIndex] = NIE_analysis_Simp(Datafilename,unit)
-%   just a function to compress all the step in details 
+%   just a function to compress all the steps 
 %   Datafilename: the name of the data file
 %   Blankfile: the name of the blank file
 %   unit: the unit of the current by default is "A"

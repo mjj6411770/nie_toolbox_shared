@@ -1,4 +1,4 @@
-%%test
+%% Run the file to see the results directly
 % Just change the file name and run it with the current unit of the file
 % note that there are text in the exemplified file, so the function importdata take only the data part if it's a pure text file 
 % the function will not work if there are no text in the file
