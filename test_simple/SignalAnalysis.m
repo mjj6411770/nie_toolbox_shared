@@ -1113,7 +1113,7 @@ classdef SignalAnalysis
                         hold on
                     end
                 end
-                title('Signal with the clustered peaks with clustered interval')
+                title('Signal with clustered intervals')
                 xlabel('Time [s]')
                 ylabel('Current [pA]')
                 xlim([0 max(theSignalAnalysis.Test_time)]);

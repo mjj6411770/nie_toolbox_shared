@@ -32,11 +32,37 @@ com/ziwzh166/NIE_toolbox_shared/assets/100134089/4b97ec58-aadb-4ac4-a5e3-ef5c66c
 
 
 
-###
-## To start
+
+## To start in /test_simple
+Inside the "/test_simple" it's the packed example with the glucose photo oxidation example. The code is the same as the detailed one, but it's more straightforward to use.
+There are three .m files and two .txt files in this directory. The first one, "SignalAnalysis.m," is the algorithm that enables NIE data analysis, while the second "NIE_analysis_Simp.m",it's the function packed all the steps listed in the detailed version, the third one "RUN_THIS_FILE.m" is the file that you can run to test the algorithm. Additionally, there are two .txt files containing the NIE and blank signals.
+In the "RUN_THIS_FILE.m" 
+there is only one line of the code
+```matlab
+    [SpikeFeatures, SpikeLocation] = NIE_analysis_Simp("1a_AuNpsNIE.txt","1b_AuNpsBlank.txt","A","OXi");
+```
+Input from the first to the end are NIE data, Blank data, the unit of current in the txt file, and the last is the reaction type, which can be "OXi" or "Red" for oxidative or reductive reaction. The output is the features of the spikes and the location of the spikes in the original signal. The output is shown below:
+The SpikeFeatures is a table with the following columns:
+```matlab
+    SpikeFeatures = 
+    Slope_Left    Slope_Right    Time_Duration    Relative_Peak_Location    Height    Prominence    Area    Prominence_Duration_Ratio
+```
+![image](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/42aafab8-f71e-482d-926b-9bf301806780)
+
+The SpikeLocation is a matrix with the following columns:
+```matlab
+    SpikeLocation = 
+    Spike_Left   Spike_Right  Spike_Peak
+```
+![image](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/7af06c01-dab1-4ce7-9644-6debf9268798)
+Note that the peak Location is expressed is Index instead of the time value in the original signal. The time value can be obtained by multiplying the index by the sampling rate. The sampling rate is 1/100 s in this example.
+
+When you run the code, it will show two plots which are explained in "Generate the new templates marked spikes on an original signal related statistic" section below. The first plot is the original signal with the marked spikes, and the second plot is the statistic of the spikes. The statistic includes the number of spikes, the average height, the average area, and the average prominence of the spikes. 
+
+## To start in /test_detailed
 
 Inside the "/test_detailed" directory, there are two files in the .m format. The first one, "SignalAnalysis," is the algorithm that enables NIE data analysis, while the second .m file, "Display.mlx," is a live editor file that permits to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the manuscript.
-Inside the "/test_simple" it's the packed example with the glucose photo oxidation example. The code is the same as the detailed one, but it's more straightforward to use.
+
 ## Importing the data
 
 ```matlab
@@ -126,7 +152,7 @@ Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
 ```
 ![Regutem](https://user-images.githubusercontent.com/100134089/224990028-70f0515b-8e6c-48ab-9137-b300eacfd2d7.svg)
 
-## Templates Matching 
+## Template Matching 
 templates matching is performed by NCC coefficient the details can be found in the paper,the NCC coefficient shows a cosine similarity, given by the method:
 ```matlab
 Sig1 = Sig1.Templatematching('Y');
