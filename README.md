@@ -145,7 +145,7 @@ it will show the raw templates and a bar chart showing % composition of the sign
 ![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
 
 ## Template tuning
-There are some templates which are templates for the noisy spikes, and some templates need to regulate two sides to avoid involving too much background trend; the first black one is removed by the method output as the last argument works as whether to plot 
+There are some templates that match noise signals, while others require modification to avoid including too much of the background trend. the first black one is removed by the method output as the last argument works as whether to plot 
 ```matlab
 Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
 ```
