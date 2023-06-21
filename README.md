@@ -160,7 +160,7 @@ The input argument 'Y' or 'N' is to choose whether to show the plot as below:
 ![SimCurve](https://user-images.githubusercontent.com/100134089/224991829-1b20b68b-26f0-4990-b84c-8269cdb2fa37.svg)
 
 ## Numerical filtering and interval merging 
-The matching is given the matched spikes with the noisy scale, which can be filtered by the numerical filter given by the method below:
+To avoid matching of the templates with the background noise additional numerical filters given by the method below are used:
 ```matlab
 Sim = 0.9;
 StdCoeff = 0.35;
