@@ -81,7 +81,7 @@ The first argument is used for changing the current unit. This simple toolbox co
 
 ## Signal denoising 
 
-As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The denoise function has two inputs. The first one is the cutoff frequency, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the longer the signal delay. If you call the method of the class by leaving the first argument blank, as shown below:
+As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The denoise method has two inputs. The first one is the cutoff frequency, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the longer the signal delay. If you call the method of the class by leaving the first argument blank, as shown below:
 ```matlab
   Sig1 = Sig1.Denoise([],10);
 ```
@@ -101,7 +101,7 @@ It will output the following curve:
 It will leave an input window on the command window asking the user if they want to change the order of the filter and the possible order values.
 
 ## Background trend removal 
-The background subtraction is made by making the smooth data using the rloess. The function has two inputs, the window size and the Y or N argument to select whether to show the plot for the fitted line and offset signal. In general, a larger window size results in a better-fitting trend line.    
+The background subtraction is made by making the smooth data using the rloess. The method has two inputs: the window size and the 'Y' or 'N' argument to select whether to show the plot for the fitted line and offset signal. In general, a larger window size results in a better-fitting trend line.    
 
 ```matlab
   Winsize = 100;
@@ -110,16 +110,16 @@ The background subtraction is made by making the smooth data using the rloess. T
 ```
 ![BgSubCat1](https://user-images.githubusercontent.com/100134089/224961351-3191704a-ea74-41f8-b866-184037d515aa.svg)
 
-## Sampling some peaks based on the height threshold 
-This step is based on the blank signal to generate the height threshold and perform sampling follow by this code:
+## Initial spike sampling via the conventional heigh threshold method 
+This step uses the blank signal to determine the height threshold. The sampling is then performed by this code:
 
 ```matlab
 Sig1 = Sig1.FlipFindPeak(Back1.Test_signal_offset,'Red','Y',"Offset"); 
 ```
-This method accepts four arguments, the first is the de-trended blank signal, and the next is whether the NIE signal is oxidative or reductive. In 'Red' or 'Oxi', the third argument is to show the plot and show the found peaks on the offset or original trend signal, the output as below:
+This method accepts four arguments (in the order from the left to the right): the de-trended blank signal, 'Red' or 'Oxi' showing whether the NIE signal is oxidative or reductive, 'Y' or 'N' to choose whether to show the found peaks, 'Offset' or 'Original' to choose whether to show the found peaks on the offset or original trend signal. The example of the output:
 ![FindPeaksCAT](https://user-images.githubusercontent.com/100134089/224968188-8bab673a-283b-4c9e-990f-4a18a26fb868.svg)
 
-## Generating the training sets and Clustering 
+## Initial spike feature extraction and automated spike grouping 
 
 Some parameters are extracted to distinguish the types of spikes and noise spikes, performed by the K-means; the method is as 
 
@@ -135,7 +135,7 @@ the first argument is based on the elbow method, and the second is by silhouette
 ![SC_CAT](https://user-images.githubusercontent.com/100134089/224986902-edcbbe18-0032-42e8-a6cf-07d80d376b41.svg)
 
 
-## Templates generation
+## Template generation
 The next step is to generate the representative templates based on the K-means results; the spikes belonging to the same cluster are averaged, obtain the raw templates; the following command makes the method:
 ```matlab
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
@@ -144,7 +144,7 @@ it will show the raw templates and bar chart for the sum of different template
 ![TemRawCAT](https://user-images.githubusercontent.com/100134089/224986136-49ab4ef3-6b7f-46ba-88df-ae843e7fe360.svg)
 ![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
 
-## Templates Regulation
+## Template tuning
 There are some templates which are templates for the noisy spikes, and some templates need to regulate two sides to avoid involving too much background trend; the first black one is removed by the method output as the last argument works as whether to plot 
 ```matlab
 Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
