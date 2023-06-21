@@ -60,7 +60,7 @@ When you run the code, it will show two plots which are explained in "Generate t
 
 ## To start in /test_detailed
 
-Inside the "/test_detailed" directory, there are two files in the .m format. The first one, "SignalAnalysis," is the algorithm that enables NIE data analysis, while the second .m file, "Display.mlx," is a live editor file that permits to observe the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the manuscript.
+The directory "/test_detailed" contains two files in the .m format. The first one, "SignalAnalysis," is the algorithm that enables NIE data analysis, while the second .m file, "Display.mlx," is a live editor file that permits observing the results as they are generated. Additionally, there are four .txt files containing the NIE and blank signals discussed in the manuscript.
 
 ## Importing the data
 
