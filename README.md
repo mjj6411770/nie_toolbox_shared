@@ -156,7 +156,7 @@ Template matching is performed using the NCC coefficient (as specified in the ma
 ```matlab
 Sig1 = Sig1.Templatematching('Y');
 ```
-the argument decides whether to show the plot as below, xy axis is linked 
+The input argument 'Y' or 'N' is to choose whether to show the plot as below:
 ![SimCurve](https://user-images.githubusercontent.com/100134089/224991829-1b20b68b-26f0-4990-b84c-8269cdb2fa37.svg)
 
 ## Numerical filtering and interval merging 
