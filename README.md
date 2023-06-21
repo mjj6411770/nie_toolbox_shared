@@ -33,8 +33,7 @@ The analysis algorithm is written in MATLAB. Please install the following add-on
 
 
 ## To start in /test_simple
-Inside the "/test_simple" it's the packed example with the glucose photo oxidation example. The code is the same as the detailed one, but it's more straightforward to use.
-There are three .m files and two .txt files in this directory. The first one, "SignalAnalysis.m," is the algorithm that enables NIE data analysis, while the second "NIE_analysis_Simp.m",it's the function packed all the steps listed in the detailed version, the third one "RUN_THIS_FILE.m" is the file that you can run to test the algorithm. Additionally, there are two .txt files containing the NIE and blank signals.
+The directory "/test_simple" contains a streamlined version of the algorithm demonstrated on the NIE data for glucose electrooxidation on gold nanoparticles. The code is identical to the detailed one (in the "/test_detailed" directory), but it is more straightforward to use as many parameters are set by default. There are three .m files and two .txt files in this directory. "SignalAnalysis.m" is the algorithm that enables NIE data analysis,  "NIE_analysis_Simp.m" is the function-packed version of all the steps listed in the detailed version, "RUN_THIS_FILE.m" is the file that you can run to test the algorithm. Additionally, there are two .txt files containing the NIE and blank data signals.
 In the "RUN_THIS_FILE.m" 
 there is only one line of the code
 ```matlab
