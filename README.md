@@ -121,12 +121,12 @@ This method accepts four arguments (in the order from the left to the right): th
 
 ## Initial spike feature extraction and automated spike grouping 
 
-Some parameters are extracted to distinguish the types of spikes and noise spikes, performed by the K-means; the method is as 
+To identify different spike-shape templates the K-means clustering is performed on the sampled spikes. The method is as 
 
 ```matlab
 Sig1 = Sig1.GeRawTrainSet('Y','Y');
 ```
-the first argument is based on the elbow method, and the second is by silhouette score, input 'y' or 'n' for the corresponding methods 
+The first argument 'Y' or 'N' is to choose whether to use or not the elbow method, and the second 'Y' or 'N' is to choose whether to use or not the silhouette score. 
 #### Elbow method:
 ![ElbowCAT](https://user-images.githubusercontent.com/100134089/224988058-98917542-1926-47d3-aefd-f1bb2a75ce32.svg)
 
@@ -136,7 +136,7 @@ the first argument is based on the elbow method, and the second is by silhouette
 
 
 ## Template generation
-The next step is to generate the representative templates based on the K-means results; the spikes belonging to the same cluster are averaged, obtain the raw templates; the following command makes the method:
+The next step is to generate the representative templates based on the K-means results. The spikes belonging to the same cluster are averaged to obtain the raw templates using the following command:
 ```matlab
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
 ```
