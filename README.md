@@ -167,17 +167,17 @@ StdCoeff = 0.35;
 HeightWidth = 0.35;
 Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
 ```
-The sim is the similarity filter. StdCoeff and HeightWidth compare each matched spike with the corresponding value for the template multiplied by the set coefficients. Following two 'Y' or 'N' arguments allow one to choose whether to show the intervals matched by two different templates and the merged different matched intervals, respectively:
+The sim is the similarity filter. StdCoeff and HeightWidth compare each matched spike with the corresponding value for the template multiplied by the set coefficients. Following two 'Y' or 'N' arguments allow one to choose whether to show the intervals matched by two different templates and the merged different matched intervals, respectively.
 ![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
 ![MatchedMerInte](https://user-images.githubusercontent.com/100134089/224994486-4957a062-d34b-45d3-92b2-a4b0d403ec5e.svg)
 
 ## Final spike feature extraction
-With two well-defined sides, we can extract the information as what we want to have. There are eight parameters get extracted. They can be found in the paper
-these are given by the code: 
+After defining the end points of the signals through template matching, various features that characterize spike shapes can be extracted from the signals. We extract eight parameters as described in the manuscript.
+These are given by the code: 
 ```matlab
 Sig1 = Sig1.GeAMTrainSet('Y','Y',"N");
 ```
-The first argument is in case the numerical filtering is still not good enough, it will take the height threshold that calculates from the blank to filter further the peak, and the following two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the test by your own.
+The first argument 'Y' or 'N' defines whether the peaks are further filtered with the height threshold defined from the blank values (this option can be used  when the numerical filtering is still not good enough to remove noise signals). The second and third 'Y' or 'N' arguments allows you to choose whether and the following two are the plot relates to select numbers to K-means we only show the elbow methods here for the other one you can run the test by your own.
 ![Elbow2](https://user-images.githubusercontent.com/100134089/225002860-d110a05c-4e00-4e59-a475-ecd4df06687f.svg)
 
 ## Generate the new templates marked spikes on an original signal related statistic
