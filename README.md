@@ -145,14 +145,14 @@ it will show the raw templates and a bar chart showing % composition of the sign
 ![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
 
 ## Template tuning
-There are some templates that match noise signals, while others require modification to avoid including too much of the background trend. Here is the line of the code that removes the noise template (number 1) one is removed by the method output as the last argument works as whether to plot 
+There are some templates that match noise signals, while others require modification to avoid including too much of the background trend. Here is the line of the code that removes the noise template (number 1) with the first argument and plots the remaining templates with 'Y' or 'N' second input argument:
 ```matlab
 Sig1 = Sig1.RawtemplatesReguFunc([2,3],'Y');
 ```
 ![Regutem](https://user-images.githubusercontent.com/100134089/224990028-70f0515b-8e6c-48ab-9137-b300eacfd2d7.svg)
 
 ## Template Matching 
-templates matching is performed by NCC coefficient the details can be found in the paper,the NCC coefficient shows a cosine similarity, given by the method:
+Template matching is performed using the NCC coefficient (as specified in the manuscript), given by the method:
 ```matlab
 Sig1 = Sig1.Templatematching('Y');
 ```
