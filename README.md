@@ -70,13 +70,13 @@ The directory "/test_detailed" contains two files in the .m format. The first on
 
 ## Resampling 
 
-This part of the code is only used for catalase NIE data and can be omited for the data recorded with commonly used potentiostats.
+This part of the code is only used for catalase NIE data and can be omitted for the data recorded with commonly used potentiostats.
 
 ```matlab
   Sig1 = Sig1.Preprocess("PA","N","Y","Y");
 ```
 
-The first argument is used for changing the current unit. This simple toolbox converts all current scales into pA. The second argument is used to shift the time from 0, which can be input as 'yes' or 'no.' The third argument determines whether resampling is performed, and the last argument determines whether to show the plot with an original and resampled signal. The following plot shows the result of resampling:
+The first argument is used for changing the current unit. This simple toolbox converts all current scales into pA. The second argument is used to shift the time from 0, which can be input as 'yes' or 'no.' The third argument determines whether resampling is performed, and the last argument determines whether to show both the original and resampled data on a plot. The following plot shows the result of resampling:
 ![Resampling](https://user-images.githubusercontent.com/100134089/224944121-91084fef-a1f0-4e92-b4d2-900f48043e30.svg)
 
 ## Denoising 
