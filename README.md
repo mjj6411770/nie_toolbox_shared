@@ -81,7 +81,7 @@ The first argument is used for changing the current unit. This simple toolbox co
 
 ## Signal denoising 
 
-As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The denoise function has two inputs. The first one is the frequency to cut off, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the longer the signal delay. If you call the method of the class by leaving the first argument blank, as shown below:
+As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The denoise function has two inputs. The first one is the cutoff frequency, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the longer the signal delay. If you call the method of the class by leaving the first argument blank, as shown below:
 ```matlab
   Sig1 = Sig1.Denoise([],10);
 ```
@@ -90,7 +90,7 @@ The output will be the 3D plot below. The time axis may differ:
 ![stftCATA1](https://user-images.githubusercontent.com/100134089/234817164-388d9127-ccb7-436e-9be0-7558cd55fafa.png)
 
 
-If you set the frequency like this:
+If you set the cutoff frequency:
 
 ```matlab
   Sig1 = Sig1.Denoise(15,10);
@@ -98,9 +98,9 @@ If you set the frequency like this:
 It will output the following curve:
 ![DenoiseCATA](https://user-images.githubusercontent.com/100134089/224957690-a83e87b4-bb0b-4373-a720-10b8a3be4b18.svg)
 
-It will leave an input window on the command window to ask if the user would like to change the order and the orders to be changed.
+It will leave an input window on the command window asking the user if they want to change the order of the filter and the possible order values.
 
-## Background Subtraction 
+## Background trend removal 
 The background subtraction is made by making the smooth data based on the roloess; you can input the argument as the bigger the window size, the better fitting the trend line. The last argument is whether to show the plot for the fitted line and offset signal, the 
 
 ```matlab
