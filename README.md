@@ -101,7 +101,7 @@ It will output the following curve:
 It will leave an input window on the command window asking the user if they want to change the order of the filter and the possible order values.
 
 ## Background trend removal 
-The background subtraction is made by making the smooth data based on the roloess; you can input the argument as the bigger the window size, the better fitting the trend line. The last argument is whether to show the plot for the fitted line and offset signal, the 
+The background subtraction is made by making the smooth data using the rloess. The function has two inputs, the window size and the Y or N argument to select whether to show the plot for the fitted line and offset signal. In general, a larger window size results in a better-fitting trend line.    
 
 ```matlab
   Winsize = 100;
