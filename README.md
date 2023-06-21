@@ -171,7 +171,7 @@ The sim is the similarity filter; the StdCoeff and HeightWidth compare each matc
 ![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
 ![MatchedMerInte](https://user-images.githubusercontent.com/100134089/224994486-4957a062-d34b-45d3-92b2-a4b0d403ec5e.svg)
 
-## Physical info extracted and regenerated the templates
+## Final spike feature extraction
 With two well-defined sides, we can extract the information as what we want to have. There are eight parameters get extracted. They can be found in the paper
 these are given by the code: 
 ```matlab
