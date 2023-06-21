@@ -79,9 +79,9 @@ This part of the code is only used for catalase NIE data and can be omitted for 
 The first argument is used for changing the current unit. This simple toolbox converts all current scales into pA. The second argument is used to shift the time from 0, which can be input as 'yes' or 'no.' The third argument determines whether resampling is performed, and the last argument determines whether to show both the original and resampled data on a plot. The following plot shows the result of resampling:
 ![Resampling](https://user-images.githubusercontent.com/100134089/224944121-91084fef-a1f0-4e92-b4d2-900f48043e30.svg)
 
-## Denoising 
+## Signal denoising 
 
-As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The method we integrated has two inputs. The first one is the frequency to cut off, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the stronger the delay to the signal. If you call the method of the class by leaving the first argument blank, as shown below:
+As stated in the paper, we denoise the signal by using a lowpass filter and understanding the noise frequency by the stft function. The denoise function has two inputs. The first one is the frequency to cut off, and the second is the order of the filter to apply. In general, the higher the order, the stronger the filter, but the longer the signal delay. If you call the method of the class by leaving the first argument blank, as shown below:
 ```matlab
   Sig1 = Sig1.Denoise([],10);
 ```
