@@ -17,7 +17,7 @@ It is a simple algorithm for using data-driven template matching in nano-impact 
 
 ## Installation
 
-The analysis algorithm is based on Matlab. Please install the following add-ons to test the package: 
+The analysis algorithm is written in MATLAB. Please install the following add-ons to test the package: 
 
 ```matlab
     %% Signal processing toolbox
