@@ -35,11 +35,11 @@ The analysis algorithm is written in MATLAB. Please install the following add-on
 ## To start in /test_simple
 The directory "/test_simple" contains a streamlined version of the algorithm demonstrated on the NIE data for glucose electrooxidation on gold nanoparticles. The code is identical to the detailed one (in the "/test_detailed" directory), but it is more straightforward to use as many parameters are set by default. There are three .m files and two .txt files in this directory. "SignalAnalysis.m" is the algorithm that enables NIE data analysis,  "NIE_analysis_Simp.m" is the function-packed version of all the steps listed in the detailed version, "RUN_THIS_FILE.m" is the file that you can run to test the algorithm. Additionally, there are two .txt files containing the NIE and blank data signals.
 In the "RUN_THIS_FILE.m" 
-there is only one line of the code
+there is only one line of the code:
 ```matlab
     [SpikeFeatures, SpikeLocation] = NIE_analysis_Simp("1a_AuNpsNIE.txt","1b_AuNpsBlank.txt","A","Oxi");
 ```
-Input from the first to the end are NIE data file name, Blank data file name, the unit of current in the txt file, and the last is the reaction type, which can be "Oxi" or "Red" for oxidative or reductive reaction. The output is the features of the spikes and the location of the spikes in the original signal. The output is shown below:
+Inputs for the "RUN_THIS_FILE.m" in order from the left to the right are: NIE data file name, Blank data file name, the current unit in the txt file, and the reaction type, which can be "Oxi" or "Red" for oxidative or reductive reaction. The output is the features of the spikes and the location of the spikes in the original signal. The output is shown below:
 The SpikeFeatures is a table with the following columns:
 ```matlab
     SpikeFeatures = 
