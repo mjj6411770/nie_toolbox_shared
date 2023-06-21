@@ -140,7 +140,7 @@ The next step is to generate the representative templates based on the K-means r
 ```matlab
 Sig1 = Sig1.KmeansGeRawSigTem(3,'Y',"Y");
 ```
-it will show the raw templates and bar chart for the sum of different template
+it will show the raw templates and a bar chart showing % composition of the signal by different templates
 ![TemRawCAT](https://user-images.githubusercontent.com/100134089/224986136-49ab4ef3-6b7f-46ba-88df-ae843e7fe360.svg)
 ![BarCAT](https://user-images.githubusercontent.com/100134089/224989387-41b8a0a0-6ba9-401f-b0e7-9ffc79e0acf9.svg)
 
