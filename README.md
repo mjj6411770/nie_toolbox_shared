@@ -187,5 +187,5 @@ Sig1 = Sig1.KmeansGeAMSigTem(2,"Y","Y");
 The input arguments are: the number of centroids used for the final clustering; 'Y' or 'N' to choose whether to show the identified spikes on the original denoised signal; 'Y' or 'N' whether to show statistic summary. 
 #### Identified spikes:
 ![CAT_Marked](https://user-images.githubusercontent.com/100134089/234838710-e7a32470-9484-48bf-aee5-08708cf6b71c.png)
-#### Reclustering and showing statistics:
+#### Final templates and summary of the extracted information:
 ![F5](https://user-images.githubusercontent.com/100134089/234835731-3987d5ae-27ee-43fe-8dc4-9b2836441469.png)
