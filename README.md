@@ -168,7 +168,7 @@ HeightWidth = 0.35;
 Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
 ```
 The sim is the similarity filter. StdCoeff and HeightWidth compare each matched spike with the corresponding value for the template multiplied by the set coefficients. Following two 'Y' or 'N' arguments allow one to choose whether to show the intervals matched by two different templates and the merged different matched intervals, respectively.
-![MatchedTeminte](https://user-images.githubusercontent.com/100134089/224993990-5aa9a6f1-ed88-43d6-808c-d4ea28757ad9.svg)
+![MatchedTeminte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/cf00e8ea-46d5-40cf-86a7-5f0ed924a27d)
 ![MatchedMerInte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/d228a724-d3b2-4136-bc1c-5523e200fe81)
 
 ## Final spike feature extraction
