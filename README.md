@@ -60,6 +60,8 @@ Note that the peak Location is expressed as Index instead of the time value in t
 ```
 
 When you run the code, it will show two plots which are explained in "Generate the new templates marked spikes on an original signal related statistic" section below. The first plot is the original signal with the marked spikes, and the second plot is the statistic of the spikes. The statistic includes the number of spikes, the average height, the average area, and the average prominence of the spikes. 
+> **Warning**
+Notice that in this simplified version, the algorithm defines the cutoff frequency by default to be cut off at 10Hz, this is according to the low sampling rate of the potentiostat we used. If you use a potentiostat with a magnitude higher sampling rate, it is recommended to follow the steps in /test_detailed and adjust the cutoff frequency according to the stft plot. 
 
 ## To start in /test_detailed
 
