@@ -969,7 +969,7 @@ classdef SignalAnalysis
                 figure;
                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
                 xlim([min(theSignalAnalysis.Test_time) max(theSignalAnalysis.Test_time)])
-                title('Original signal with the all merged template matched interval')
+                title('Offset signal with the all merged template matched intervals')
                 xlabel('Time [s]')
                 ylabel('Current [pA]')
                 hold on

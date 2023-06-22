@@ -13,11 +13,11 @@ Back1 = Back1.Preprocess("A","Y","N","N");
 Sig2 = Sig2.Preprocess("PA","N","Y","Y");
 Back2 = Back2.Preprocess("PA","N","Y","Y");
 %% Denoise
-Sig1 = Sig1.Denoise(10,10);
+Sig1 = Sig1.Denoise(10,10,"Y");
 %%
-Sig2 = Sig2.Denoise(15,10);
+Sig2 = Sig2.Denoise(15,10,"Y");
 %% BackgroundSubtraction Sig1
-Winsize = 2000;
+Winsize = 600;
 Sig1 = Sig1.BgSub(Winsize,'y');
 Back1 = Back1.BgSub(1000,'N');
 %% BackGroundsub Sig2
@@ -31,17 +31,15 @@ Sig2 = Sig2.FlipFindPeak(Back2.Test_signal_offset,'Red','Y',"Offset");
 Sig1 = Sig1.GeRawTrainSet('Y','Y');
 Sig2 = Sig2.GeRawTrainSet('Y','Y');
 %% Clustering and Raw unregularated templates generation
-Sig1 = Sig1.KmeansGeRawSigTem(6,'Y',"Y");
+Sig1 = Sig1.KmeansGeRawSigTem(5,'Y',"Y");
 Sig2 = Sig2.KmeansGeRawSigTem(3,'Y',"Y");
 
 %%
-Sig1 = Sig1.RawtemplatesReguFunc([1,2,3,4,5,6],'Y');
+Sig1 = Sig1.RawtemplatesReguFunc([2,3,4,5],'Y');
 Sig2 = Sig2.RawtemplatesReguFunc([1,3],'Y');
 
 %%
-tic
 Sig1 = Sig1.Templatematching('Y');
-toc
 Sig2 = Sig2.Templatematching('Y');
 
 %% Template filtered the peaks Sig1
