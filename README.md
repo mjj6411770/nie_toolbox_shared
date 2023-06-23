@@ -82,7 +82,7 @@ This part of the code is only used for catalase NIE data and can be omitted for 
 ```
 
 The first argument is used for changing the current unit. This simple toolbox converts all current scales into pA. The second argument is used to shift the time from 0, which can be input as 'yes' or 'no.' The third argument determines whether resampling is performed, and the last argument determines whether to show both the original and resampled data on a plot. The following plot shows the result of resampling:
-![Resampling](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/b2dd1a7d-fdad-4cb6-a661-18c96ba5a97e)
+![Resampling](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/f6c31cb3-251d-4dbf-a40d-c17b397dbea4)
 
 ## Signal denoising 
 
