@@ -27,7 +27,7 @@ The analysis algorithm is written in MATLAB. Please install the following add-on
     
 ## The algorithm follows the flowchart below
 
-![S1](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/7422d871-ab18-401d-ae03-cdee40a81ed3)
+![S1](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/ee93beb7-ac8b-45ab-98ab-def4913e9459)
 
 
 
