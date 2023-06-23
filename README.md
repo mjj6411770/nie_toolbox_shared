@@ -173,8 +173,8 @@ HeightWidth = 0.35;
 Sig1 = Sig1.TemplatematchingFiltering(Sim,StdCoeff,HeightWidth,'Y','Y');
 ```
 The sim is the similarity filter. StdCoeff and HeightWidth compare each matched spike with the corresponding value for the template multiplied by the set coefficients. Following two 'Y' or 'N' arguments allow one to choose whether to show the intervals matched by two different templates and the merged different matched intervals, respectively.
-![MatchedTeminte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/29249159-726a-48dd-8317-fbc1dad2fd69)
-![MatchedMerInte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/d228a724-d3b2-4136-bc1c-5523e200fe81)
+![MatchedTeminte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/1c3de128-090a-41ed-a9cc-5bf0b89a78f5)
+![MatchedMerInte](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/64247035-e7ce-43a1-be42-a8d43e6a2e3e)
 
 ## Final spike feature extraction
 After defining the end points of the signals through template matching, various features that characterize spike shapes can be extracted from the signals. We extract eight parameters as described in the manuscript.
