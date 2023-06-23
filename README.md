@@ -45,14 +45,14 @@ The SpikeFeatures is a table with the following columns:
     SpikeFeatures = 
     Slope_Left    Slope_Right    Time_Duration    Relative_Peak_Location    Height    Prominence    Area    Prominence_Duration_Ratio
 ```
-![image](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/42aafab8-f71e-482d-926b-9bf301806780)
+![ExtraFea](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/0270e8b8-5c6d-4c2f-b7bd-9557e4f23b0e)
 
 The SpikeLocation is a matrix with the following columns:
 ```matlab
     SpikeLocation = 
     Spike_Left   Spike_Right  Spike_Peak
 ```
-![image](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/7af06c01-dab1-4ce7-9644-6debf9268798)
+![SpikeLoc](https://github.com/ziwzh166/NIE_toolbox_shared/assets/100134089/b3c84185-0f0b-40a9-a8e4-d3d8541ca3ed)
 
 Note that the peak Location is expressed as Index instead of the time value in the original signal. The time value can be obtained by (SpikeLocation - 1) multiplying the index by the sampling rate. The sampling rate is 1/100 s in this example.
 ```matlab
