@@ -257,9 +257,14 @@ classdef SignalAnalysis
                 %resample the signal into the original length,effect by the
                 %filter orders
                 %                 Sig_fil = resample(Sig_fil,length(theSignalAnalysis.Test_signal),length(Sig_fil));
-                scale_factor= mean([min(theSignalAnalysis.Test_signal)/min(Sig_fil),...
-                    max(theSignalAnalysis.Test_signal)/max(Sig_fil)...
-                    median(theSignalAnalysis.Test_signal)/median(Sig_fil)]);
+                % scale_factor= mean([min(theSignalAnalysis.Test_signal)/min(Sig_fil),...
+                %     max(theSignalAnalysis.Test_signal)/max(Sig_fil)...
+                %     median(theSignalAnalysis.Test_signal)/median(Sig_fil)]);
+                rms_original = rms(theSignalAnalysis.Test_signal);
+                rms_filtered = rms(Sig_fil);
+
+                % Calculate the scale factor using the RMS values
+                scale_factor = rms_original / rms_filtered;
                 %                 RandIdx = randi(length(theSignalAnalysis.Test_signal),[1000,1]);
                 %                 scale_factor = mean(theSignalAnalysis.Test_signal(RandIdx)./Sig_fil(RandIdx));
                 if ismember(Plotstates,theSignalAnalysis.BinaryY)

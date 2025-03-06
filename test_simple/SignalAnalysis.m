@@ -1,6 +1,6 @@
 classdef SignalAnalysis
     %Simplified SEE SignalanalysisClass
-    
+
     properties
         %Filename can be the pwd address
         Filename
@@ -63,12 +63,12 @@ classdef SignalAnalysis
         AMTemplates
         %After matching the interval index
         AMTemidx
-%         %Data computed by conventional method by computing area of Guassian
-%         %distribution
-%         DataGaussain
-%         %simulated gaussain siganl
-%         SigGaussain
-        
+        %         %Data computed by conventional method by computing area of Guassian
+        %         %distribution
+        %         DataGaussain
+        %         %simulated gaussain siganl
+        %         SigGaussain
+
     end
     properties(Hidden,Access = private)
         gpuStates
@@ -76,7 +76,7 @@ classdef SignalAnalysis
         Intecolors
         AMIntecolors
     end
-    
+
     methods
         function thisSignalAnalysis = SignalAnalysis(Filename)
             %Input the type of files of the raw signal'*.txt';
@@ -100,19 +100,19 @@ classdef SignalAnalysis
             thisSignalAnalysis.Test_signal = Data(:,2);
             thisSignalAnalysis.Test_time = Data(:,1);
             thisSignalAnalysis.Test_freq  = 1/mean(diff(thisSignalAnalysis.Test_time));
-            
+
         end
         function [theSignalAnalysis] = Preprocess(theSignalAnalysis,OriginalUnit,Timeshift,Resample,ResamplePlot)
             %[theSignalAnalysis] = Preprocess(theSignalAnalysis,OriginalUnit,Timeshift,Resample)
             % preprocess for the SEE signal, change the unit, shift the
             % time axis, and resample the data in case uneven sampling
-%             Input -- OriginalUnit a string of original data's unit e.g. 'pA', it will convert different current into pA in this toolbox
-%                      Timeshift wether or not performing the time shift, will shift the test_time starts from 0, input string as e.g. 'y'
-%                      Resample wether or not to perform the resampling for uneven sampling, input string as e.g. 'y'
-%                      ResamplePlot wether or not to show the plot with and without resampling, input string as e.g. 'y'
-%             Output -- Sig.test_signal converted unit signal vector, depending on chosen option becomes resampled signal
-%                       Sig.Test_time updated time vector in original unit, depending on chosen option becomes shifted time from 0
-%                       Sig.Test_freq updatedtest frequency depends on the test_time vector
+            %             Input -- OriginalUnit a string of original data's unit e.g. 'pA', it will convert different current into pA in this toolbox
+            %                      Timeshift wether or not performing the time shift, will shift the test_time starts from 0, input string as e.g. 'y'
+            %                      Resample wether or not to perform the resampling for uneven sampling, input string as e.g. 'y'
+            %                      ResamplePlot wether or not to show the plot with and without resampling, input string as e.g. 'y'
+            %             Output -- Sig.test_signal converted unit signal vector, depending on chosen option becomes resampled signal
+            %                       Sig.Test_time updated time vector in original unit, depending on chosen option becomes shifted time from 0
+            %                       Sig.Test_freq updatedtest frequency depends on the test_time vector
             if nargin == 1
                 OriginalUnit = "A" ;
                 Timeshift = "N";
@@ -134,15 +134,15 @@ classdef SignalAnalysis
                     Factor = 1e-6;
                 case {"PA","pA"}
                     Factor = 1;
-                    
+
             end
             theSignalAnalysis.Test_signal = theSignalAnalysis.Test_signal * Factor;
-            
+
             if ismember(Timeshift,theSignalAnalysis.BinaryY)
                 theSignalAnalysis.Test_time = ...
                     [0:1/theSignalAnalysis.Test_freq:(length(theSignalAnalysis.Test_signal)-1)* 1/theSignalAnalysis.Test_freq]';
             end
-            
+
             if ismember(Resample,theSignalAnalysis.BinaryY)
                 diff_all = diff(theSignalAnalysis.Test_time);
                 Ts = mode(diff_all);
@@ -169,9 +169,9 @@ classdef SignalAnalysis
                 theSignalAnalysis.Test_time = ts2(10:end-15)';
                 theSignalAnalysis.Test_freq = Fs;
             end
-            
+
         end
-        
+
         function [theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder,Plotstates)
             %[theSignalAnalysis] = Denoise(theSignalAnalysis,CutoffFreq,FilterOrder)
             %Denoise signal based on FIR lsq low pass filter, changing filter order to see the result
@@ -203,52 +203,52 @@ classdef SignalAnalysis
                     CutoffFreq = 10;
                 end
             end
-            
-%             [s_stft,f_stft,~] =...
-%                 stft(theSignalAnalysis.Test_signal,theSignalAnalysis.Test_freq);
-%             %istft
-%             %set the frequency according to the STFT plot
-%             stft_filter = find(abs(f_stft) > CutoffFreq);
-%             % update 17-3 replace the other frequency by zero row
-%             s_stft(stft_filter,:) = s_stft(stft_filter,:)*0;
-%             [stft_signal,stft_t] = istft(s_stft,gather(theSignalAnalysis.Test_freq));
-%             %Signal shift
-%             stft_signal = real(stft_signal(15:end-15));
-%             stft_t = stft_t(15:end-15);
-%             
-%             if ismember(Plotstates,theSignalAnalysis.BinaryY)
-%                 figure('Name','The signal with stft denoised signal');
-%                 t = tiledlayout(2,1);
-%                 ax1 = nexttile;
-%                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal);
-%                 xlim([0 gather(max(theSignalAnalysis.Test_time))]);
-%                 title('Original')
-%                 ax2 = nexttile;
-%                 plot(stft_t,stft_signal);
-%                 xlim([0 gather(max(theSignalAnalysis.Test_time))]);
-%                 title('Denoised STFT')
-%                 linkaxes([ax1 ax2],'xy')
-%                 ylabel(t, 'Current [pA]')
-%                 xlabel(t, 'Time [s]')
-%             end
-%             
-%             theSignalAnalysis.Test_signal = real(stft_signal);
-%             theSignalAnalysis.Test_time = real(stft_t);
+
+            %             [s_stft,f_stft,~] =...
+            %                 stft(theSignalAnalysis.Test_signal,theSignalAnalysis.Test_freq);
+            %             %istft
+            %             %set the frequency according to the STFT plot
+            %             stft_filter = find(abs(f_stft) > CutoffFreq);
+            %             % update 17-3 replace the other frequency by zero row
+            %             s_stft(stft_filter,:) = s_stft(stft_filter,:)*0;
+            %             [stft_signal,stft_t] = istft(s_stft,gather(theSignalAnalysis.Test_freq));
+            %             %Signal shift
+            %             stft_signal = real(stft_signal(15:end-15));
+            %             stft_t = stft_t(15:end-15);
+            %
+            %             if ismember(Plotstates,theSignalAnalysis.BinaryY)
+            %                 figure('Name','The signal with stft denoised signal');
+            %                 t = tiledlayout(2,1);
+            %                 ax1 = nexttile;
+            %                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal);
+            %                 xlim([0 gather(max(theSignalAnalysis.Test_time))]);
+            %                 title('Original')
+            %                 ax2 = nexttile;
+            %                 plot(stft_t,stft_signal);
+            %                 xlim([0 gather(max(theSignalAnalysis.Test_time))]);
+            %                 title('Denoised STFT')
+            %                 linkaxes([ax1 ax2],'xy')
+            %                 ylabel(t, 'Current [pA]')
+            %                 xlabel(t, 'Time [s]')
+            %             end
+            %
+            %             theSignalAnalysis.Test_signal = real(stft_signal);
+            %             theSignalAnalysis.Test_time = real(stft_t);
             % filter by the filter, hard to compute the scale factor
             Flag = 'Yes';
             N     = FilterOrder;  % Order
             while ismember(Flag,theSignalAnalysis.BinaryY)
                 Fs = gather(theSignalAnalysis.Test_freq);  % Sampling Frequency
-                
+
                 Fpass = CutoffFreq ;  % Passband Frequency
                 Fstop = CutoffFreq + 5;  % Stopband Frequency
                 Wpass = 1;  % Passband Weight
                 Wstop = 1;   % Stopband Weight
-                
+
                 % Calculate the coefficients using the FIRLS function.
                 b  = firls(N, [0 Fpass Fstop Fs/2]/(Fs/2), [1 1 0 0], [Wpass Wstop]);
                 Hd = dfilt.dffir(b);
-                
+
                 fil_length = length(b);
                 %try filtfilt with filter
                 Sig_fil = filter(Hd,gather(theSignalAnalysis.Test_signal));
@@ -257,9 +257,14 @@ classdef SignalAnalysis
                 %resample the signal into the original length,effect by the
                 %filter orders
                 %                 Sig_fil = resample(Sig_fil,length(theSignalAnalysis.Test_signal),length(Sig_fil));
-                scale_factor= mean([min(theSignalAnalysis.Test_signal)/min(Sig_fil),...
-                    max(theSignalAnalysis.Test_signal)/max(Sig_fil)...
-                    median(theSignalAnalysis.Test_signal)/median(Sig_fil)]);
+                % scale_factor= mean([min(theSignalAnalysis.Test_signal)/min(Sig_fil),...
+                %     max(theSignalAnalysis.Test_signal)/max(Sig_fil)...
+                %     median(theSignalAnalysis.Test_signal)/median(Sig_fil)]);
+                rms_original = rms(theSignalAnalysis.Test_signal);
+                rms_filtered = rms(Sig_fil);
+
+                % Calculate the scale factor using the RMS values
+                scale_factor = rms_original / rms_filtered;
                 %                 RandIdx = randi(length(theSignalAnalysis.Test_signal),[1000,1]);
                 %                 scale_factor = mean(theSignalAnalysis.Test_signal(RandIdx)./Sig_fil(RandIdx));
                 if ismember(Plotstates,theSignalAnalysis.BinaryY)
@@ -287,16 +292,16 @@ classdef SignalAnalysis
             theSignalAnalysis.Test_time = theSignalAnalysis.Test_time(fil_length:end);
             theSignalAnalysis.Test_signal = Sig_fil*scale_factor;
         end
-        
+
         function [theSignalAnalysis] = BgSub(theSignalAnalysis,WinSize,Plotstates)
             %[theSignalAnalysis] = BgSub(theSignalAnalysis,WinSize,Plotstates)
             %offset the background by rloess
-%             Input --
-%             WinSize Windows size, by default set as 1000, lower the value, and the curve fits better the NIE spikes(undesired).
-%             Plotstates whether or not showing the plot for the background subtraction, Output a subplot the first is the test_signal with a fitted trend line. The second one is the offset signal
-%             Output--
-%             Sig.test_signal_offset Offset signal data vector
-%             Sig.test_signal_trendline Fitted trendline
+            %             Input --
+            %             WinSize Windows size, by default set as 1000, lower the value, and the curve fits better the NIE spikes(undesired).
+            %             Plotstates whether or not showing the plot for the background subtraction, Output a subplot the first is the test_signal with a fitted trend line. The second one is the offset signal
+            %             Output--
+            %             Sig.test_signal_offset Offset signal data vector
+            %             Sig.test_signal_trendline Fitted trendline
             if nargin ==1
                 WinSize = 1000;
                 Plotstates = "N";
@@ -330,7 +335,7 @@ classdef SignalAnalysis
             theSignalAnalysis.Test_signal_trendline = Trendline;
             theSignalAnalysis.Test_signal_offset = SigOff;
         end
-        
+
         function [theSignalAnalysis] = FlipFindPeak(theSignalAnalysis,BackgroundSigOffset,ReactionStates,Plotstates,PlotIndex)
             %[theSignalAnalysis] = FlipFindPeak(theSignalAnalysis,BackgroundSigOffset,ReactionStates,Plotstates,PlotIndex)
             %Flip find the peaks
@@ -346,7 +351,7 @@ classdef SignalAnalysis
             %             Sig.FlipFindInte Found interval by height threshold in data index, first column left point, second column right points.
             %             Sig.PeaksFound three colum vector first colum as height, second the peak location in index, third the width unit as second.
             %
-            
+
 
             if nargin ==1
             end
@@ -404,7 +409,7 @@ classdef SignalAnalysis
             RPrIdx = setdiff(1:size(PeaksProFound,1),RPidx);
             %pepeated index on the left side
             LPridx = setdiff(1:size(PeaksProFound,1),LPidx);
-            
+
             %take the highest in the peak vector
             for i = 1:size(RPrIdx,2)
                 Vecidx = find(InteFlipSelected(:,1) == InteFlipSelected(LPridx(i),1));
@@ -475,7 +480,7 @@ classdef SignalAnalysis
                 end
             end
         end
-        
+
         function [theSignalAnalysis] = GeRawTrainSet(theSignalAnalysis,NumPlot,SilPlot)
             %[theSignalAnalysis] = GeRawTrainSet(theSignalAnalysis,'NumPlot')
             %Generate the raw template features training set and signal
@@ -552,7 +557,7 @@ classdef SignalAnalysis
             %plot
             SignalAnalysis.KmeansClusterNumSelection(theSignalAnalysis,InteFeaturesNorm,15,NumPlot,SilPlot);
         end
-        
+
         function [theSignalAnalysis] = KmeansGeRawSigTem(theSignalAnalysis,ClusterNum,Templot,Staplot)
             %[theSignalAnalysis] = KmeansGeRawSigTem(theSignalAnalysis,ClusterNum,Templot,Staplot)
             %Generation for the raw templates
@@ -591,7 +596,7 @@ classdef SignalAnalysis
             %Generate the templates using the Func RoughTemplateGe
             TemplateRawGe = SignalAnalysis.RoughTemplateGe(...
                 theSignalAnalysis,theSignalAnalysis.TrainingSignalOri,theSignalAnalysis.RawTemClusterFeatures,ClusterNum,SignalInteIdx);
-            
+
             StacountInte = zeros(ClusterNum,2);
             for i = 1:ClusterNum
                 StacountInte(i,:) = nnz(SignalInteIdx == i);
@@ -635,7 +640,7 @@ classdef SignalAnalysis
                 ylabel('Numbers of intervals')
             end
         end
-        
+
         function [theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
             %[theSignalAnalysis] = RawtemplatesReguFunc(theSignalAnalysis,ManSelectedNum,Plotstates)
             %Regulated the raw template, take from left side min to peak to
@@ -678,8 +683,8 @@ classdef SignalAnalysis
                 xlim(f(1:length(RegulatedtemplatesNum)),[0 gather(max(xmax))]);
             end
         end
-        
-        
+
+
         function [theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
             %[theSignalAnalysis] = Templatematching(theSignalAnalysis,Plotstates)
             %Perform the template matching with the fine templates
@@ -732,9 +737,9 @@ classdef SignalAnalysis
                 xlim(fsim(1:size(theSignalAnalysis.TemplatateRawRegu,1)),[0 Inf])
                 linkaxes(fsim(1:size(theSignalAnalysis.TemplatateRawRegu,1)),'xy')
             end
-            
+
         end
-       
+
         function [theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurve)
             %[theSignalAnalysis] = TemplatematchingFiltering(theSignalAnalysis,SimilarityLevel,StdFiltercoeff,HeightWidthratioCoeff,EachTemplateMatchCurve,TotalTemplateMatchCurev)
             %filter some matched signal according to the features of the
@@ -801,7 +806,7 @@ classdef SignalAnalysis
                                 PeaksTim{i,2}(j,2) = 0;
                                 PeaksTim{i,2}(j,3) = 0;
                                 continue
-                                
+
                             end
                             [MinLeftVal,RealtiveLeftLoc] = min(theSignalAnalysis.Test_signal_offset(PeaksTim{i,2}(j,1):(PeaksTim{i,2}(j,1) + MaxInteIdx - 1)));
                             [MinRightVal,RealtiveRightLoc] = min(theSignalAnalysis.Test_signal_offset((PeaksTim{i,2}(j,1) + MaxInteIdx - 1):PeaksTim{i,2}(j,2)));
@@ -830,9 +835,9 @@ classdef SignalAnalysis
                             StdInte = std(theSignalAnalysis.Test_signal_offset((PeaksTim{i,2}(j,1)  + RealtiveLeftLoc -1):(PeaksTim{i,2}(j,1) + MaxInteIdx + RealtiveRightLoc - 1)));
                             %                             MinGApInte = abs(MinLeftVal - MinRightVal)/abs(MaxInte);
                             HeightWidthRatioInte = abs(MaxInteVal - min([MinLeftVal,MinRightVal]))/((RealtiveRightLoc + MaxInteIdx  - RealtiveLeftLoc) * (1/theSignalAnalysis.Test_freq));
-                            
+
                     end
-                    %if the thresold exsist 
+                    %if the thresold exsist
                     try
                         ThrCond =  (StdInte <= (Stdfilter *StdFiltercoeff))||(HeightWidthRatioInte <= (HeightWidthRatioFilter * HeightWidthratioCoeff));
                     catch
@@ -860,7 +865,7 @@ classdef SignalAnalysis
                 end
             end
             [~,InteMatchOrder] = sort(cellfun(@numel,PeaksTim(:,2)),'descend');
-            
+
             for i = 1:size(theSignalAnalysis.TemplatateRawRegu,1)
                 %created a exam vector, i =1; is made by other intervals selected by other templates
                 %else
@@ -909,7 +914,7 @@ classdef SignalAnalysis
                             else
                                 continue
                             end
-                            
+
                         end
                     end
                 end
@@ -956,15 +961,15 @@ classdef SignalAnalysis
                 %add another loop to iterate the different templates
                 for i = 1:size(theSignalAnalysis.TemplatateRawRegu,1)
                     for j = 1:size(PeaksTim{i,2},1)
-                        
+
                         plot(theSignalAnalysis.Test_time...
                             (PeaksTim{i,2}(j,1):PeaksTim{i,2}(j,2)),theSignalAnalysis.Test_signal_offset(PeaksTim{i,2}(j,1):PeaksTim{i,2}(j,2)),...
                             'linewidth',3,'Color',theSignalAnalysis.Intecolors(theSignalAnalysis.TemplatateRawReguNum(i),:))
-                        
+
                     end
                 end
             end
-            
+
             if ismember(TotalTemplateMatchCurve,theSignalAnalysis.BinaryY)
                 figure;
                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
@@ -980,8 +985,8 @@ classdef SignalAnalysis
                 end
             end
         end
-        
-        
+
+
         function [theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis,HeightFilter,NumPlot,SilPlot)
             %[theSignalAnalysis] = GeAMTrainSet(theSignalAnalysis)
             %Genearte the training set for after the template matching
@@ -1030,7 +1035,7 @@ classdef SignalAnalysis
             AFTInteProperities = [DataOffset,DataOri];
             if ismember(HeightFilter,theSignalAnalysis.BinaryY)
                 %for the signal which is noisy or low signal to noise ratio
-                theSignalAnalysis.TemplatateMatchedInte = theSignalAnalysis.TemplatateMatchedInte(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:); 
+                theSignalAnalysis.TemplatateMatchedInte = theSignalAnalysis.TemplatateMatchedInte(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:);
                 AFTInteProperities = AFTInteProperities(AFTInteProperities(:,5)> theSignalAnalysis.BackGroundHeightThr,:);
             end
             theSignalAnalysis.AMtrainingSet = array2table(AFTInteProperities,...
@@ -1050,7 +1055,7 @@ classdef SignalAnalysis
                 fprintf("Only one peak signal\n")
             end
         end
-        
+
         function [theSignalAnalysis] = KmeansGeAMSigTem(theSignalAnalysis,ClusterNum,MarkPlot,TotalPlot)
             %[theSignalAnalysis] = KmeansGeAMSigTem(theSignalAnalysis,ClusterNum,MarkPlot,TemPlot,TotalPlot)
             %Clustering the intervals by template matching
@@ -1194,91 +1199,91 @@ classdef SignalAnalysis
                 xlim(axRange,[0 max(theSignalAnalysis.AMtrainingSet.TimeDuration)])
                 xlabel(axRange,'TimeDuration[s]')
                 ylabel(axRange,'Counts')
-                
+
             end
         end
-%         function [theSignalAnalysis] = ConGaussian(theSignalAnalysis,PlotState)
-%             %[theSignalAnalysis] = ConGaussian(theSignalAnalysis,PlotState)
-%             %Compoute the data of the original set up by guassain
-%             %distribuion, will plot the comoarasion of the data computed
-%             %assuming the peak is gaussain 
-%             DGaussain = zeros(size(theSignalAnalysis.RawTemClusterFeatures,1),6);
-%             DGaussain(:,1) = theSignalAnalysis.RawTemClusterFeatures.Peakheight;
-%             %std computed by the width 
-%             DGaussain(:,2) = theSignalAnalysis.RawTemClusterFeatures.PeakWidth/2.355;
-%             %area H*std*0.3989
-%             DGaussain(:,3) = (DGaussain(:,1) .* DGaussain(:,2))/0.3989;
-%             % peaks location
-%             DGaussain(:,5) = theSignalAnalysis.PeaksFound(:,2);
-%             %left side peak point -3*sigma
-%             DGaussain(:,4) = DGaussain(:,5) - round(3 * DGaussain(:,2)*gather(theSignalAnalysis.Test_freq));
-%             DGaussain(DGaussain(:,4) <= 0,4) = 1;
-%             %right point peak point +3*sigma
-%             DGaussain(:,6) = DGaussain(:,5) + round(3 * DGaussain(:,2)*gather(theSignalAnalysis.Test_freq));
-%             %             pks1(i,:) * (gaussmf(time_simInt,[Pkswidth(i)*(1/thePeakFind.Test_freq)/2.355 thePeakFind.Test_Time(loc1(i))]));
-%             Gausig = cell(size(DGaussain,1),2);
-%             for i = 1:size(Gausig,1)
-%                 Gausig{i,1} = [theSignalAnalysis.Test_time(DGaussain(i,4)):gather(1/theSignalAnalysis.Test_freq):theSignalAnalysis.Test_time(DGaussain(i,6))];
-%                 if theSignalAnalysis.Reactionstates == "Oxi"
-%                     Gausig{i,2} = DGaussain(i,1) * gaussmf(Gausig{i,1},[DGaussain(i,2),theSignalAnalysis.Test_time(DGaussain(i,5))]);
-%                 else
-%                     Gausig{i,2} = -DGaussain(i,1) * gaussmf(Gausig{i,1},[DGaussain(i,2),theSignalAnalysis.Test_time(DGaussain(i,5))]);
-%                 end
-%             end
-%             theSignalAnalysis.DataGaussain = DGaussain;
-%             theSignalAnalysis.SigGaussain = Gausig;
-%             %find the shared value
-% %             [~,idxDG] = intersect(DGaussain(:,5),theSignalAnalysis.TemplatateMatchedInte(:,3),'stable');
-% %             [~,idxTM] = intersect(theSignalAnalysis.TemplatateMatchedInte(:,3),DGaussain(:,5),'stable');
-% %             %Compare cell, with area and range for guassain is set as 6 time std
-% %             DCompare = cell(1,2);
-% %             %area
-% %             DCompare{1} = zeros(size(idxDG,1),3);
-% %             DCompare{1}(:,1) = DGaussain(idxDG,3);
-% %             DCompare{1}(:,2) = theSignalAnalysis.AMtrainingSet.Area(idxTM);
-% %             DCompare{1}(:,3) = DCompare{1}(:,1) - DCompare{1}(:,2);
-% %             %histogram(DCompare{1}(:,3))
-% %             %mean(DCompare{1}(:,3));
-% %             %std()
-% %             %time range
-% %             DCompare{2} = zeros(size(idxDG,1),3);
-% %             DCompare{2}(:,1) = DGaussain(idxDG,2)*6;
-% %             DCompare{2}(:,2) = theSignalAnalysis.AMtrainingSet.TimeDuration(idxTM);
-% %             % in ms
-% %             DCompare{2}(:,3) = (DCompare{2}(:,1) - DCompare{2}(:,2))*1e3;
-%             %mean(DCompare{2}(:,3));
-%             %NUMBERS DIFFERENCE
-%             %size(theSignalAnalysis.AMtrainingSet,1)
-%             %size(DGaussain,1)
-%             %num the old way in fact more?
-%             %mean(size(DGaussain,1) - size(theSignalAnalysis.AMtrainingSet,1)
-%             if ismember(PlotState,theSignalAnalysis.BinaryY)
-%                 figure;
-%                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
-%                 xlim([min(theSignalAnalysis.Test_time) max(theSignalAnalysis.Test_time)])
-%                 title('Offset signal with peaks found by template matching and height thresold')
-%                 xlabel('Time [s]')
-%                 ylabel('Current [pA]')
-%                 hold on
-%                 ax1 = matlab.graphics.chart.primitive.Line.empty(size(theSignalAnalysis.TemplatateMatchedInte,1),0);
-%                 for i = 1:size(theSignalAnalysis.TemplatateMatchedInte,1)
-%                     ax1(i) = plot(theSignalAnalysis.Test_time(theSignalAnalysis.TemplatateMatchedInte(i,1):theSignalAnalysis.TemplatateMatchedInte(i,2))...
-%                         ,theSignalAnalysis.Test_signal_offset(theSignalAnalysis.TemplatateMatchedInte(i,1):theSignalAnalysis.TemplatateMatchedInte(i,2)),...
-%                         'LineWidth',2,'Color',"black",'LineWidth',1.5,'DisplayName','Signal span found by Template Matching');
-%                     hold on
-%                 end
-%                 axsc1 = scatter(theSignalAnalysis.Test_time(theSignalAnalysis.TemplatateMatchedInte(:,3)),theSignalAnalysis.Test_signal_offset(theSignalAnalysis.TemplatateMatchedInte(:,3)),'+','black','LineWidth',1.5,'SizeData',65,'DisplayName','Peaks found by template matching');
-%                 hold on
-%                 ax2 = matlab.graphics.chart.primitive.Line.empty(size(theSignalAnalysis.TemplatateMatchedInte,1),0);
-%                 for i = 1:size(Gausig,1)
-%                     ax2(i) = plot(Gausig{i,1},Gausig{i,2},'Color',"red",'LineWidth',2,'DisplayName','Assumed Gaussain Distribution');
-%                     hold on
-%                 end
-%                 axsc2 = scatter(theSignalAnalysis.Test_time(DGaussain(:,5)),theSignalAnalysis.Test_signal_offset(DGaussain(:,5)),'red','SizeData',72,'LineWidth',1.5,'DisplayName','Peaks found by Height threshold');
-%                 legend([axsc1,axsc2,ax1(1),ax2(1)],'Box','off') 
-%             end
-%             
-%         end
+        %         function [theSignalAnalysis] = ConGaussian(theSignalAnalysis,PlotState)
+        %             %[theSignalAnalysis] = ConGaussian(theSignalAnalysis,PlotState)
+        %             %Compoute the data of the original set up by guassain
+        %             %distribuion, will plot the comoarasion of the data computed
+        %             %assuming the peak is gaussain
+        %             DGaussain = zeros(size(theSignalAnalysis.RawTemClusterFeatures,1),6);
+        %             DGaussain(:,1) = theSignalAnalysis.RawTemClusterFeatures.Peakheight;
+        %             %std computed by the width
+        %             DGaussain(:,2) = theSignalAnalysis.RawTemClusterFeatures.PeakWidth/2.355;
+        %             %area H*std*0.3989
+        %             DGaussain(:,3) = (DGaussain(:,1) .* DGaussain(:,2))/0.3989;
+        %             % peaks location
+        %             DGaussain(:,5) = theSignalAnalysis.PeaksFound(:,2);
+        %             %left side peak point -3*sigma
+        %             DGaussain(:,4) = DGaussain(:,5) - round(3 * DGaussain(:,2)*gather(theSignalAnalysis.Test_freq));
+        %             DGaussain(DGaussain(:,4) <= 0,4) = 1;
+        %             %right point peak point +3*sigma
+        %             DGaussain(:,6) = DGaussain(:,5) + round(3 * DGaussain(:,2)*gather(theSignalAnalysis.Test_freq));
+        %             %             pks1(i,:) * (gaussmf(time_simInt,[Pkswidth(i)*(1/thePeakFind.Test_freq)/2.355 thePeakFind.Test_Time(loc1(i))]));
+        %             Gausig = cell(size(DGaussain,1),2);
+        %             for i = 1:size(Gausig,1)
+        %                 Gausig{i,1} = [theSignalAnalysis.Test_time(DGaussain(i,4)):gather(1/theSignalAnalysis.Test_freq):theSignalAnalysis.Test_time(DGaussain(i,6))];
+        %                 if theSignalAnalysis.Reactionstates == "Oxi"
+        %                     Gausig{i,2} = DGaussain(i,1) * gaussmf(Gausig{i,1},[DGaussain(i,2),theSignalAnalysis.Test_time(DGaussain(i,5))]);
+        %                 else
+        %                     Gausig{i,2} = -DGaussain(i,1) * gaussmf(Gausig{i,1},[DGaussain(i,2),theSignalAnalysis.Test_time(DGaussain(i,5))]);
+        %                 end
+        %             end
+        %             theSignalAnalysis.DataGaussain = DGaussain;
+        %             theSignalAnalysis.SigGaussain = Gausig;
+        %             %find the shared value
+        % %             [~,idxDG] = intersect(DGaussain(:,5),theSignalAnalysis.TemplatateMatchedInte(:,3),'stable');
+        % %             [~,idxTM] = intersect(theSignalAnalysis.TemplatateMatchedInte(:,3),DGaussain(:,5),'stable');
+        % %             %Compare cell, with area and range for guassain is set as 6 time std
+        % %             DCompare = cell(1,2);
+        % %             %area
+        % %             DCompare{1} = zeros(size(idxDG,1),3);
+        % %             DCompare{1}(:,1) = DGaussain(idxDG,3);
+        % %             DCompare{1}(:,2) = theSignalAnalysis.AMtrainingSet.Area(idxTM);
+        % %             DCompare{1}(:,3) = DCompare{1}(:,1) - DCompare{1}(:,2);
+        % %             %histogram(DCompare{1}(:,3))
+        % %             %mean(DCompare{1}(:,3));
+        % %             %std()
+        % %             %time range
+        % %             DCompare{2} = zeros(size(idxDG,1),3);
+        % %             DCompare{2}(:,1) = DGaussain(idxDG,2)*6;
+        % %             DCompare{2}(:,2) = theSignalAnalysis.AMtrainingSet.TimeDuration(idxTM);
+        % %             % in ms
+        % %             DCompare{2}(:,3) = (DCompare{2}(:,1) - DCompare{2}(:,2))*1e3;
+        %             %mean(DCompare{2}(:,3));
+        %             %NUMBERS DIFFERENCE
+        %             %size(theSignalAnalysis.AMtrainingSet,1)
+        %             %size(DGaussain,1)
+        %             %num the old way in fact more?
+        %             %mean(size(DGaussain,1) - size(theSignalAnalysis.AMtrainingSet,1)
+        %             if ismember(PlotState,theSignalAnalysis.BinaryY)
+        %                 figure;
+        %                 plot(theSignalAnalysis.Test_time,theSignalAnalysis.Test_signal_offset);
+        %                 xlim([min(theSignalAnalysis.Test_time) max(theSignalAnalysis.Test_time)])
+        %                 title('Offset signal with peaks found by template matching and height thresold')
+        %                 xlabel('Time [s]')
+        %                 ylabel('Current [pA]')
+        %                 hold on
+        %                 ax1 = matlab.graphics.chart.primitive.Line.empty(size(theSignalAnalysis.TemplatateMatchedInte,1),0);
+        %                 for i = 1:size(theSignalAnalysis.TemplatateMatchedInte,1)
+        %                     ax1(i) = plot(theSignalAnalysis.Test_time(theSignalAnalysis.TemplatateMatchedInte(i,1):theSignalAnalysis.TemplatateMatchedInte(i,2))...
+        %                         ,theSignalAnalysis.Test_signal_offset(theSignalAnalysis.TemplatateMatchedInte(i,1):theSignalAnalysis.TemplatateMatchedInte(i,2)),...
+        %                         'LineWidth',2,'Color',"black",'LineWidth',1.5,'DisplayName','Signal span found by Template Matching');
+        %                     hold on
+        %                 end
+        %                 axsc1 = scatter(theSignalAnalysis.Test_time(theSignalAnalysis.TemplatateMatchedInte(:,3)),theSignalAnalysis.Test_signal_offset(theSignalAnalysis.TemplatateMatchedInte(:,3)),'+','black','LineWidth',1.5,'SizeData',65,'DisplayName','Peaks found by template matching');
+        %                 hold on
+        %                 ax2 = matlab.graphics.chart.primitive.Line.empty(size(theSignalAnalysis.TemplatateMatchedInte,1),0);
+        %                 for i = 1:size(Gausig,1)
+        %                     ax2(i) = plot(Gausig{i,1},Gausig{i,2},'Color',"red",'LineWidth',2,'DisplayName','Assumed Gaussain Distribution');
+        %                     hold on
+        %                 end
+        %                 axsc2 = scatter(theSignalAnalysis.Test_time(DGaussain(:,5)),theSignalAnalysis.Test_signal_offset(DGaussain(:,5)),'red','SizeData',72,'LineWidth',1.5,'DisplayName','Peaks found by Height threshold');
+        %                 legend([axsc1,axsc2,ax1(1),ax2(1)],'Box','off')
+        %             end
+        %
+        %         end
         function [theSignalAnalysis] = Rematching(theSignalAnalysis,TimesRematching,MarkPlot,TotalPlot)
             %[theSignalAnalysis] = Rematching(theSignalAnalysis,TimesRematching,MarkPlot,TotalPlot)
             % Remacthching the signal by replacing TemplatateRawRegu by AMTemplates
@@ -1303,17 +1308,17 @@ classdef SignalAnalysis
 
         end
     end
-    
-    
-    
-    
+
+
+
+
     methods(Static)
-        
+
         function MatrixFilled = Autofill(vector,matrix,j)
             %   matrix = Autofill(vector,matrix,j)
             %   fill the vector into a matrix at j coloum if length different
             %   automatically fill 0 at the smaller length part
-            
+
             MatrixFilled_T = vector;
             MatrixFilled = matrix;
             if size(MatrixFilled,1) == length(MatrixFilled_T)
@@ -1330,9 +1335,9 @@ classdef SignalAnalysis
                     MatrixFilled(:,j) = MatrixFilled_T;
                 end
             end
-            
+
         end
-        
+
         function [ ] = KmeansClusterNumSelection(theSignalAnalysis,TrainSet,TestNum,SumplotStates,SilhouetteStates)
             %[] = KmeansClusterNumSelection(TrainngSet,TestNum,SumplotStates,SilhouetteStates)
             %   Find the kmeans clusters numbers by the elbow plots and
@@ -1345,14 +1350,14 @@ classdef SignalAnalysis
                 SumplotStates = 'Y';
                 SilhouetteStates = 'Y';
             end
-            
+
             if size(TrainSet,1) < TestNum
                 TestNum = size(TrainSet,1) - 1;
             end
             if TestNum == 0
                 TestNum = 1;
             end
-            
+
             %   Avg DIs plot
             if ismember(SumplotStates,theSignalAnalysis.BinaryY)
                 DisSumInte = zeros(TestNum,1);
@@ -1383,28 +1388,28 @@ classdef SignalAnalysis
                 end
             end
         end
-        
+
         function [X_norm, mu, sigma] = featureNormalize(X)
             %[X_norm, mu, sigma] = featureNormalize(X)
             %FEATURENORMALIZE Normalizes the features in X
             %   FEATURENORMALIZE(X) returns a normalized version of X where
             %   the mean value of each feature is 0 and the standard deviation
             %   is 1.
-            
+
             mu = mean(X);
             X_norm = bsxfun(@minus, X, mu);
-            
+
             sigma = std(X_norm);
             X_norm = bsxfun(@rdivide, X_norm, sigma);
-            
+
         end
-        
+
         function X = NormReconstruct(Xnorm,mu,sigma)
             %X = NormReconstruct(Xnorm, mu,sigma)
             %   Reconstruct the normolized data
             X =  Xnorm * sigma + mu;
         end
-        
+
         function TemplateRawGe = RoughTemplateGe(theSignalAnalysis,trainingSignal,ClusterFeatures,ClusterNum,SignalIntervalIdx)
             TemplateRawGe = cell(ClusterNum,1);
             for i = 1:ClusterNum
@@ -1427,7 +1432,7 @@ classdef SignalAnalysis
                         end
                         PkLoc = round(FeatureInte.TimeDuration(k)*FeatureInte.RelativePeakLoc(k)/(1/theSignalAnalysis.Test_freq)) + 1;
                         SignInte(k,:) = circshift(SignInte(k,:),abs(WidestLoc - PkLoc));
-                        
+
                         % non zeors mean of each interval signal
                         TemplateRawGe{i} = nonzeros(mean(SignInte));
                     end
